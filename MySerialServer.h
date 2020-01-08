@@ -5,11 +5,14 @@
 #ifndef PART2_MYSERIALSERVER_H
 #define PART2_MYSERIALSERVER_H
 
+#include <thread>
 #include "Server.h"
 #include "ClientHandler.h"
 
 //using namespace server_side;
 class mySerialServer: public server {
+private:
+    bool stopper;
 public:
     mySerialServer() {return;}
     ~mySerialServer() {return;}
