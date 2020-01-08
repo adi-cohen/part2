@@ -10,7 +10,8 @@
 
 class ClientHandler {
 public:
-    virtual int handleClient(server_side:: mySocket, server_side:: mySocket out) = 0;
+    // in will be the input client/socket problem, out - will be the solution for his problem
+    virtual int handleClient(server_side:: mySocket in, server_side:: mySocket out) = 0;
 };
 
 
