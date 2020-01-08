@@ -3,4 +3,4 @@ project(part2)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(part2 main.cpp)
+add_executable(part2 main.cpp clientHandler.h myTestClientHandler.h Solver.h CachManager.h)
