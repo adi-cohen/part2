@@ -28,7 +28,10 @@ public:
     void handleClient(int client_socket) override {
         bool inFile = true;
         string firstBuffer = "";
+        //while we didnt read the line "end"
         while (inFile) {
+            //we will read chunks of data from the client
+            // and split it to lines by \n
             char buffer[1024] = {0};
             read(client_socket, buffer, 1024);
             string secondBuffer = buffer;
