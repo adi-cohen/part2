@@ -8,19 +8,19 @@
 #include "Solver.h"
 #include <string>
 #include <iostream>
-
-class StringReverser: public solver < std::string, std::string > {
+using namespace std;
+class StringReverser: public Solver<string,string> {
 public:
-    // implements the virtual function of solver abstract class - solve()
-    std::string solve(std::string str) {
-        std::string reverse;
-        for(std::string::iterator it = str.end(); it != str.begin(); it--) {
+    // implements the virtual function of Solver abstract class - solve()
+    string solve(string str) {
+        string reverse;
+        for(string::iterator it = str.end(); it != str.begin(); it--) {
             if(*it == '\\') {
                 break;
             }
             reverse += *it;
         }
-        std::cout << "Problem was solved by the string reverser";
+        cout << "Problem was solved by the string reverser";
         return reverse;
     }
 };

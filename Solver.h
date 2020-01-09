@@ -5,13 +5,18 @@
 #ifndef PART2_SOLVER_H
 #define PART2_SOLVER_H
 
+#include "Problem.h"
+#include "Solution.h"
+#include "string.h"
+using namespace std;
 // will receive a generic problem and solution
-template <class Problem, class Solution>
-class solver {
+template <typename P, typename S>
+class Solver{
+    P problem;
+    S solution;
 public:
-    virtual Solution solve(Problem) = 0;
-    virtual ~solver() {};
+   // virtual string solve(string problem) = 0;
+    virtual S solve(P) = 0;
 };
-
 
 #endif //PART2_SOLVER_H

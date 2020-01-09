@@ -10,9 +10,9 @@
 #include "ClientHandler.h"
 
 //using namespace server_side;
-class mySerialServer: public server {
+class mySerialServer: public server_side::Server {
 private:
-    bool stopper;
+    bool stopper{};
 public:
     mySerialServer() {return;}
     ~mySerialServer() {return;}
