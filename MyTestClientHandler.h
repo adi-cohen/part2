@@ -51,6 +51,7 @@ public:
                 const char *solutionChar = solution.c_str();
                 send(client_socket, solutionChar, solution.size(), 0);
             }
+            //in the next iteration we will handle the secondPart after the \n
             firstBuffer = secondPart;
             if (firstPart == "end") {
                 //we finish the reading of the file
