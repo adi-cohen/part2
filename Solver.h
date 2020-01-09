@@ -9,24 +9,14 @@
 #include "Solution.h"
 #include "string.h"
 using namespace std;
-class Solver{
-public:
-    virtual string solve(string problem) = 0;
-};
-
 // will receive a generic problem and solution
-//template <typename Problem, typename Solution>
-//class Solver {
-//    Solution solution;
-//    Problem problem;
-//public:
-//    Solver (Problem pro, Solution sol){
-//        this->solution =sol;
-//        this->problem=pro;
-//    }
-//    virtual Solution solve(Problem) = 0;
-//    virtual ~Solver() {};
-//};
-
+template <typename P, typename S>
+class Solver{
+    P problem;
+    S solution;
+public:
+   // virtual string solve(string problem) = 0;
+    virtual S solve(P) = 0;
+};
 
 #endif //PART2_SOLVER_H

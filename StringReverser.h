@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
-class StringReverser: public Solver {
+class StringReverser: public Solver<string,string> {
 public:
     // implements the virtual function of Solver abstract class - solve()
     string solve(string str) {

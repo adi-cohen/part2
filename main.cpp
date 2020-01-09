@@ -1,5 +1,6 @@
 #include <iostream>
 #include "string"
+#include "Solver.h"
 #include "Server.h"
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
@@ -10,9 +11,9 @@ namespace boot {
     public:
         int main(int port) {
             server_side::Server *serialServer = new mySerialServer();
-            Solver *stringRevers = new StringReverser();
+            Solver<string,string> *stringRevers = new StringReverser();
             CacheManager *fileCache = new FileCacheManager();
-            ClientHandler *testClient = new MyTestClientHandler(stringRevers, fileCache);
+            ClientHandler *testClient = new MyTestClientHandler<string, string>(stringRevers, fileCache);
             serialServer->open(port, testClient);
         }
     };
