@@ -7,8 +7,10 @@
 #include <string>
 #include <unistd.h>
 #include <string.h>
+#include "iostream"
 
 #define BUFFER_SIZE 256
+using namespace std;
 namespace server_side {
      // the following class was created for saving the socket ID
     class mySocket {
@@ -31,7 +33,7 @@ namespace server_side {
         }
 
         // the following method will read the socket data which is a string:
-        bool readIn(std::string* str) {
+        bool readIn( string* str) {
             char buffer[BUFFER_SIZE];
             // zeroing the buffer
             ::bzero(buffer, BUFFER_SIZE);

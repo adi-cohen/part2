@@ -11,19 +11,22 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include <sstream>
+#include "strstream"
 #include "mySocket.h"
 #define TIME_OUT_FIRST 20
 #define TIME_OUT 1
 
+using namespace std;
 // the following method will activate the client handler over the current connected client
-void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, ClientHandler* handler1) {
+void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, ClientHandler* clientHandler) {
     struct sockaddr cli1 = *((struct sockaddr*) cli);
     socklen_t clil1 = *clil;
     int sock1 = *sock;
     struct timeval tv;
     tv.tv_sec = TIME_OUT;
     tv.tv_usec = 0;
-    // while we should not close the server - run the loop
+    // while we should not close the Server - run the loop
     while(*(stop)) {
         // try to accpet
         int newsockfd = accept(sock1, &cli1, &clil1);
@@ -34,7 +37,8 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
         // if the a new socket was accepted we send it to the
         server_side::mySocket in(newsockfd);
         // calling the client handler
-        handler1->handleClient(in, in);
+
+        clientHandler->handleClient(newsockfd);
         ::close(newsockfd);
         setsockopt(*sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
     }
