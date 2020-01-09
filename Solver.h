@@ -7,6 +7,7 @@
 
 
 class Solver {
+    //virtual <Solution> solve(<Problem>);
 
 };
 
