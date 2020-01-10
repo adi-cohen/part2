@@ -37,7 +37,6 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
         // if the a new socket was accepted we send it to the
         server_side::mySocket in(newsockfd);
         // calling the client handler
-
         clientHandler->handleClient(newsockfd);
         ::close(newsockfd);
         setsockopt(*sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);

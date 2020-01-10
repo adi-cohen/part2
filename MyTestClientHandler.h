@@ -17,7 +17,6 @@ template<typename P, typename S>
 class MyTestClientHandler : public ClientHandler {
 private:
     Solver<P, S> *solver;
-
     CacheManager *cacheManager{};
 public:
     MyTestClientHandler(Solver<P, S> *sol, CacheManager *cache) {

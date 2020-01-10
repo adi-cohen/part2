@@ -8,15 +8,14 @@
 #include "CacheManager.h"
 #include "map"
 
-class FileCacheManager :public CacheManager{
+class FileCacheManager : public CacheManager {
 private:
     map<string ,string > problemMap;
     int index =0;
 public:
     bool find(string problem) override;
-     string get(string problem) override ;
-     void save(string problem, string solution) override ;
-
+    string get(string problem) override ;
+    void save(string problem, string solution) override ;
 };
 
 
