@@ -11,13 +11,13 @@ namespace boot {
     class Main {
     public:
         int main(int port) {
-            //create serial server as server
+            // create serial server as server
             server_side::Server *serialServer = new mySerialServer();
-            //create string reverser as solver
+            // create string reverser as solver
             Solver<string,string> *stringRevers = new StringReverser();
-            //create file cache as cache manager
+            // create file cache as cache manager
             CacheManager *fileCache = new FileCacheManager();
-            //create testClientHandler with string reverser and file cache
+            // create testClientHandler with string reverser and file cache
             ClientHandler *testClient = new MyTestClientHandler<string, string>(stringRevers, fileCache);
             serialServer->open(port, testClient);
         }
@@ -25,7 +25,7 @@ namespace boot {
 }
 
 int main(int argc, char *argv[]) {
-    int port = atoi(argv[0]);
+    //int port = atoi(argv[0]);
     boot::Main main;
-    main.main(port);
+    main.main(8081);
 };

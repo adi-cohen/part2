@@ -5,6 +5,8 @@
 #include <fstream>
 #include "FileCacheManager.h"
 
+
+// search the input problem in the map
 bool FileCacheManager::find(string problem) {
     return problemMap.find(problem) != problemMap.end();
 }
@@ -12,7 +14,7 @@ bool FileCacheManager::find(string problem) {
 string FileCacheManager::get(string problem) {
     fstream myFile;
     string fileName = problemMap[problem];
-    myFile.open(fileName,ios::in);
+    myFile.open(fileName, ios::in);
     if (!myFile.is_open()) {
         throw "an error - file not found";
     } else {
@@ -26,7 +28,7 @@ string FileCacheManager::get(string problem) {
 
 void FileCacheManager::save(string problem, string solution) {
     //create new index for new file
-    this->index = index+1;
+    this->index = index + 1;
     //the file name is the number of the index
     string fileName = "problem number " + index;
     fstream io_file;
@@ -40,5 +42,8 @@ void FileCacheManager::save(string problem, string solution) {
     io_file.close();
     //adding the file to the problemMap
     this->problemMap[problem] = fileName;
-
 }
+
+FileCacheManager::FileCacheManager() {}
+
+

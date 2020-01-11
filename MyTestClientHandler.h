@@ -44,7 +44,9 @@ public:
                 string solution = this->cacheManager->get(firstPart);
                 const char *solutionChar = solution.c_str();
                 send(client_socket, solutionChar, solution.size(), 0);
-            } else { //if we need to solve the problem now
+
+            } else {
+                //if we need to solve the problem now
                 string solution = this->solver->solve(firstPart);
                 this->cacheManager->save(firstPart, solution);
                 const char *solutionChar = solution.c_str();
