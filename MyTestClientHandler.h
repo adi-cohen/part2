@@ -9,6 +9,7 @@
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include <sys/socket.h>
+#include "hash_map"
 
 
 #ifndef PART2_MYTESTCLIENTHANDLER_H
@@ -18,9 +19,9 @@ class MyTestClientHandler : public ClientHandler {
 private:
     Solver<P, S> *solver;
 
-    CacheManager *cacheManager{};
+    CacheManager<P,S> *cacheManager{};
 public:
-    MyTestClientHandler(Solver<P, S> *sol, CacheManager *cache) {
+    MyTestClientHandler(Solver<P, S> *sol, CacheManager<P, S> *cache) {
         this->solver = sol;
         this->cacheManager = cache;
     }
@@ -40,12 +41,22 @@ public:
             int startSecondPart = firstBuffer.find("\n") + 1;
             string secondPart = firstBuffer.substr(
                     startSecondPart, firstBuffer.length()); //all the values from \n to end
+            //create string hash to the problem
+            //in our case the string is one-to-one function
+            string hashProblem = firstPart;
+
+            if (firstPart == "end") {
+                //we finish the reading of the file
+                inFile = false;
+            }
+
             //if we already solve this problem
-            if (this->cacheManager->find(firstPart)) {
+            else if (this->cacheManager->find(firstPart)) {
                 string solution = this->cacheManager->get(firstPart);
                 const char *solutionChar = solution.c_str();
                 send(client_socket, solutionChar, solution.size(), 0);
-            } else { //if we need to solve the problem now
+            } else {
+                //if we need to solve the problem now
                 string solution = this->solver->solve(firstPart);
                 this->cacheManager->save(firstPart, solution);
                 const char *solutionChar = solution.c_str();
@@ -53,10 +64,7 @@ public:
             }
             //in the next iteration we will handle the secondPart after the \n
             firstBuffer = secondPart;
-            if (firstPart == "end") {
-                //we finish the reading of the file
-                inFile = false;
-            }
+
         }
     }
 };

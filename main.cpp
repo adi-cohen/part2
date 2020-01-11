@@ -16,7 +16,7 @@ namespace boot {
             //create string reverser as solver
             Solver<string,string> *stringRevers = new StringReverser();
             //create file cache as cache manager
-            CacheManager *fileCache = new FileCacheManager();
+            CacheManager<string,string> *fileCache = new FileCacheManager<string,string>();
             //create testClientHandler with string reverser and file cache
             ClientHandler *testClient = new MyTestClientHandler<string, string>(stringRevers, fileCache);
             serialServer->open(port, testClient);
@@ -27,5 +27,5 @@ namespace boot {
 int main(int argc, char *argv[]) {
     int port = atoi(argv[0]);
     boot::Main main;
-    main.main(port);
+    main.main(8081);
 };
