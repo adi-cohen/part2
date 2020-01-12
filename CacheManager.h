@@ -6,12 +6,17 @@
 #define PART2_CACHEMANAGER_H
 
 #include "string"
+#include "list"
+#include "unordered_map"
 using namespace std;
+template<typename P, typename S>
 class CacheManager {
+
 public:
-    virtual bool find(string problem) =0;
-    virtual string get(string problem) = 0;
-    virtual void save(string problem, string solution)=0;
+    //we will get the problem
+    virtual bool find(P problem) =0;
+    virtual S get(P problem) = 0;
+    virtual void save(P problem, S solution)=0;
 };
 
 

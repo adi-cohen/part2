@@ -32,7 +32,8 @@ protected:
     {
         evaluatedNodes++;
         // get the state/node from the open list
-        State<T>* s = *(openList.begin());
+        State<T>* s = *(openList.front());
+        pathLength+= s->getCost();
         openList.pop_front();
         return s;
     }
