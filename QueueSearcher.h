@@ -5,7 +5,7 @@
 #ifndef PART2_QUEUESEARCHER_H
 #define PART2_QUEUESEARCHER_H
 #include "Isearcher.h"
-//#include "CompareCost.h"
+#include "CompareCost.h"
 #include <deque>
 
 /*

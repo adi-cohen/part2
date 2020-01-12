@@ -29,7 +29,7 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
     // while we should not close the Server - run the loop
     while(*(stop)) {
         // try to accpet
-        int newsockfd = accept(sock1, &cli1, &clil1);
+        int newsockfd = accept(sock1, (struct sockaddr *)&cli1, &clil1);
         if(newsockfd < 0) {
             std::cout << ("ERROR on accept") << std::endl;
             return;
@@ -42,7 +42,7 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
         //::close(newsockfd);
         setsockopt(*sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
     }
-    //close(sock1);
+    close(sock1);
 }
 
 

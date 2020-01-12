@@ -22,10 +22,33 @@ public:
     vector<int> initState; // the source/enter state
     vector<int> goalState; // the goal/exit state
 public:
-
-    // constructor
-    matrixProblem(vector<string> mat, vector<int> initState, vector<int> goalState) {
-
+     /*
+     * The constructor of this class gets a matrix which is represented by a vector of strings,
+     * the initial state which is represented by vector of int, and a goal state which is represented
+     * the same way, the contructor builds a matrix of int using a split function, and
+     * sets all of the class members
+     */
+    matrixProblem(vector<string> stringMatrix, vector<int> initState, vector<int> goalState) {
+        // tempMatrix is going to include the values of the input matrix
+         vector<vector<int>> tempMatrix;
+         // iterate through the vector of strings(the input matrix in the main)
+         for (auto it = stringMatrix.begin(); it != stringMatrix.end() ; it++) {
+             vector<int> line;
+             vector<string> values; // = splitLine(*it,",");
+             // iterate over the values of the input string matrix after it was split by ","
+             for (auto it = values.begin(); it != values.end(); it++)
+             {
+                 // convert each value in each line from string to int
+                 line.push_back(std::stoi(*it));
+             }
+             tempMatrix.push_back(line);
+         }
+         // set the fields of the class:
+         this->matrix = tempMatrix;
+         this->length = tempMatrix.size();
+         this->width = tempMatrix[0].size();
+         this->initState = initState;
+         this->goalState = goalState;
     }
 
     //  Inherited from ISearchable - the following method creates the initial state and returns it
