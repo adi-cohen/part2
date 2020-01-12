@@ -14,9 +14,9 @@ class CacheManager {
 
 public:
     //we will get the problem
-    virtual bool find(string problem) =0;
-    virtual S get(string problem) = 0;
-    virtual void save(string problem, S solution)=0;
+    virtual bool find(P problem) =0;
+    virtual S get(P problem) = 0;
+    virtual void save(P problem, S solution)=0;
 };
 
 

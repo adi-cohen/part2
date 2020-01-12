@@ -47,6 +47,10 @@ public:
         this->cameFrom = state;
     }
 
+    void deleteCameFrom(State<T>* state){
+        this->cameFrom = NULL;
+    }
+
     State<T>* getCameFrom()
     {
         return cameFrom;

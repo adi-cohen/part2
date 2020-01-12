@@ -9,7 +9,7 @@
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include <sys/socket.h>
-#include "hash_map"
+//#include "hash_map"
 
 
 #ifndef PART2_MYTESTCLIENTHANDLER_H
