@@ -42,7 +42,7 @@ protected:
 
 public:
     // will be implemented in the Best First Search
-    virtual solution search(ISearchable<T> *searchable) = 0; // the search method
+    virtual S search(ISearchable<T> *searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm
     int getNumberOfNodesEvaluated() {
         return evaluatedNodes;
