@@ -8,4 +8,4 @@ set(CMAKE_CXX_FLAGS -pthread)
 add_executable(part2 main.cpp ClientHandler.h MyTestClientHandler.h Solver.h CacheManager.h Server.h
         MySerialServer.h MySerialServer.cpp ClientHandler.h mySocket.cpp
         mySocket.h Problem.h Solution.h StringReverser.h FileCacheManager.h ISearchable.h State.h
-        Isearcher.h QueueSearcher.h CompareCost.h  StackSearcher.h PrioritySearcher.h BestFirstSearch.h DFS.h MatrixProblem.h MyClientHandler.h MatrixSolverBestFS.h cmake-build-debug/Matrix.cpp Matrix.h)
+        Isearcher.h QueueSearcher.h CompareCost.h  StackSearcher.h PrioritySearcher.h BestFirstSearch.h DFS.h MatrixProblem.h MyClientHandler.h MatrixSolverBestFS.h cmake-build-debug/Matrix.cpp)

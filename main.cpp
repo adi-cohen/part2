@@ -21,8 +21,6 @@ namespace boot {
             //create file cache as cache manager
             CacheManager<string> *fileCache = new FileCacheManager<string>();
 
-            //create searcher
-
             //create testClientHandler with string reverser and file cache
             ClientHandler *clientHandler = new MyClientHandler(fileCache);
             serialServer->open(port, clientHandler);
