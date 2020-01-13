@@ -51,7 +51,7 @@ public:
             read(client_socket, buffer, 1024);
             string secondBuffer = buffer;
             firstBuffer = firstBuffer + secondBuffer;
-            string firstPart = firstBuffer.substr(0, firstBuffer.find("\n")); //all tha values from start to \n
+            const string firstPart = firstBuffer.substr(0, firstBuffer.find("\n")); //all tha values from start to \n
             int startSecondPart = firstBuffer.find("\n") + 1;
             string secondPart = firstBuffer.substr(
                     startSecondPart, firstBuffer.length()); //all the values from \n to end
