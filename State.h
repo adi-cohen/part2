@@ -7,7 +7,7 @@
 #include <string>
 using namespace std;
 
-template <class T>
+template <typename T>
 class State {
     T state; // the state represented by a string
     int cost; // cost to reach this state (set by a setter)
@@ -15,12 +15,15 @@ class State {
     string cameFromDir; // the direction it came from
 public:
     // constructor
-    State<T>(T state, int cost, State<T>* cameFrom,string cameFromDir)
+    State<T>(T state, int cost)
     {
         this->state = state;
         this->cost = cost;
-        this->cameFrom = cameFrom;
-        this->cameFromDir = cameFromDir;
+    }
+
+
+    void setCameFromDirection(string dir){
+        this->cameFromDir = dir;
     }
 
     // we override Object's Equals method

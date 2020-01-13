@@ -58,10 +58,10 @@ public:
     }
 
     // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    solution backTrace(State<T>* s, ISearchable<T> *searchable) {
+    solution backTrace(State<T>* s, ISearchable<T> *searchable)
+    {
         deque<string> path;
         string ans = "";
-        int commasCount = 0;
         // pathLength holds to cost to reach to that state
         this->pathLength = s->getCost();
         State<T>* initState = searchable->getInitialState();
@@ -73,17 +73,17 @@ public:
             // increment the loop by the following command
             s = s->getCameFrom();
         }
+
         // use an iterator to save the path of the state s
         auto it = path.begin();
         ans += *it;
         it++;
+
         for (; it != path.end(); it++)
         {
-            commasCount++;
             ans += ",";
             ans += *it;
         }
-        int numOfTraversalNodes = ans.size() - commasCount;
         // return the pass of all the states
         return ans;
     }

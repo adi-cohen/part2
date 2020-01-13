@@ -12,22 +12,23 @@
 #include "map"
 #include "unordered_map"
 
-template<typename P, typename S>
-class FileCacheManager : public CacheManager<P, S> {
+template< typename S>
+//the problem always will be represented by string
+class FileCacheManager : public CacheManager<S> {
 //private:
     //map <string, string> problemMap;
     //int index = 0;
 private:
-    list<pair<P, S>> list1;
-    unordered_map<P, typename list<pair<string, S>>::iterator> cacheMap;
-    map<P, string> solvedProblem; //from problem to string ;
+    list<pair<string, S>> list1;
+    unordered_map<string, typename list<pair<string, S>>::iterator> cacheMap;
+    map<string, string> solvedProblem; //from problem to string ;
     unsigned int capacity =5; // maximum capacity of cache
 public:
-    bool find(P problem) override {
+    bool find(string problem) override {
         return solvedProblem.find(problem) != solvedProblem.end();
     }
 
-    S get(P problem) override {
+    S get(string problem) override {
         //if not in cache
         if (cacheMap.find(problem) == cacheMap.end()) {
             fstream myFile;
@@ -52,7 +53,7 @@ public:
         }
     }
 
-    void save(P problem, S solution) override {
+    void save(string problem, S solution) override {
         //CACHE
         //we need to insert the obj to cache
             insertNewObjToList(problem, solution);
@@ -71,7 +72,7 @@ public:
         this->solvedProblem[problem] = fileName;
     }
 
-    void insertExistObjToList(P &problem, S &solution) {
+    void insertExistObjToList(string problem, S &solution) {
         //change the location of the object
         list1.erase(cacheMap[problem]);
         // update reference
@@ -80,7 +81,7 @@ public:
         cacheMap[problem] = list1.begin();
     }
 
-    void insertNewObjToList(P &problem, S &solution) {
+    void insertNewObjToList(string &problem, S &solution) {
         //if cache is full
         if (list1.size() == capacity) {
             string last = list1.back().first;
