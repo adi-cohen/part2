@@ -11,7 +11,6 @@
 using namespace std;
 template<typename P, typename S>
 class CacheManager {
-
 public:
     //we will get the problem
     virtual bool find(P problem) =0;

@@ -13,7 +13,8 @@ public:
     // in will be the input client/socket problem, out - will be the solution for his problem
     //virtual int handleClient(server_side:: mySocket in, server_side:: mySocket out) = 0;
     virtual void handleClient(int socket) = 0;
-
+    // ClientHandler* clone() = 0;
+    //ClientHandler(){};
 };
 
 
