@@ -3,9 +3,13 @@
 #include "Solver.h"
 #include "Server.h"
 #include "MySerialServer.h"
-#include "MyTestClientHandler.h"
-#include "StringReverser.h"
-
+#include "MyClientHandler.h"
+#include "FileCacheManager.h"
+#include "MatrixSolverBestFS.h"
+#include "Solver.h"
+#include "Isearcher.h"
+#include "ISearchable.h"
+#include "BestFirstSearch.h"
 //create new namespace boot with function main
 namespace boot {
     class Main {
@@ -13,13 +17,15 @@ namespace boot {
         int main(int port) {
             //create serial server as server
             server_side::Server *serialServer = new mySerialServer();
-            //create string reverser as solver
-            Solver<string,string> *stringRevers = new StringReverser();
+
             //create file cache as cache manager
-            CacheManager<string,string> *fileCache = new FileCacheManager<string,string>();
+            CacheManager<string> *fileCache = new FileCacheManager<string>();
+
+            //create searcher
+
             //create testClientHandler with string reverser and file cache
-            ClientHandler *testClient = new MyTestClientHandler<string, string>(stringRevers, fileCache);
-            serialServer->open(port, testClient);
+            ClientHandler *clientHandler = new MyClientHandler(fileCache);
+            serialServer->open(port, clientHandler);
         }
     };
 }

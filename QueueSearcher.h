@@ -12,8 +12,8 @@
  * This class extends the ISearcher interface, and represents an abstract class of an algorithm
  * which solve a search problem using a queue
  */
-template < class T, class solution >
-class QueueSearcher : public ISearcher< solution , T > {
+template < class S, class T >
+class QueueSearcher : public ISearcher< S , T > {
 protected:
     deque<State < T >*> openList; // This dequeue holds the states/nodes which are waiting to be processed
     int evaluatedNodes; // number of nodes evaluated by the algorithm
@@ -45,7 +45,7 @@ public:
         evaluatedNodes = 0;
     }
     // will be implement by a specific algorithm (like BFS)
-    virtual solution search (ISearchable<T>* searchable) = 0;
+    virtual S search (ISearchable<T>* searchable) = 0;
     // get how many nodes were evaluated by the algorithm
     int getNumberOfNodesEvaluated()
     {
@@ -58,7 +58,7 @@ public:
     }
 
     // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    solution backTrace(State<T>* currState, ISearchable<T> *searchable) {
+    S backTrace(State<T>* currState, ISearchable<T> *searchable) {
         deque<string> path;
         string ans = "";
         this->pathLength = currState->getCost();

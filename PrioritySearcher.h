@@ -10,15 +10,15 @@
 #include "CompareCost.h"
 using namespace std;
 
-template <class solution,class T>
-class PrioritySearcher : public ISearcher<solution,T> {
+template <class S,class T>
+class PrioritySearcher : public ISearcher<S,T> {
 protected:
     /* This multiset holds the states which are waiting to be processed, it is sorted from the smallest cost
     * to the largest cost to represent an priority queue
     */
     multiset<State<T> *, CompareCost<T>> openList;
-    int evaluatedNodes;
-    int pathLength;
+    int evaluatedNodes=0;
+    int pathLength=0;
 
     /* When we insert a state to the open list we will insert it into the open list
      * and the multiset will sort itself by the CompareCost object function.
@@ -40,12 +40,12 @@ protected:
 
 public:
     // constructor
-    PrioritySearcher()
-    {
-        evaluatedNodes = 0;
-    }
+//    PrioritySearcher()
+//    {
+//        evaluatedNodes = 0;
+//    }
     // will be implemented in the Best First Search
-    virtual solution search (ISearchable<T>* searchable) = 0; // the search method
+    virtual S search (ISearchable<T>* searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm
     int getNumberOfNodesEvaluated()
     {
@@ -58,7 +58,7 @@ public:
     }
 
     // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    solution backTrace(State<T>* s, ISearchable<T> *searchable)
+    string backTrace(State<T>* s, ISearchable<T> *searchable)
     {
         deque<string> path;
         string ans = "";
