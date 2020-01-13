@@ -26,6 +26,10 @@ public:
         cout << "Problem was solved by the string reverser"<<endl;
         return reverse;
     }
+
+    Solver* clone() {
+        return this;
+    }
 };
 
 #endif //PART2_STRINGREVERSER_H
