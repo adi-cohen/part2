@@ -17,7 +17,6 @@ using namespace std;
 template<class S, class T>
 class BestFirstSearch : public PrioritySearcher<S, T> {
 public:
-
     /*
      * This method gets a searchable problem runs the Best First Search algorithm and returns
      * the minimal path it found
@@ -48,7 +47,6 @@ public:
                     s->setCameFrom(n);
                     // and move it to the open list
                     this->addToOpenList(s);
-
                 }
                     /* if the state isn't found in the closed list but is found in the open list,
                     * we will check if it has smaller

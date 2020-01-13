@@ -14,7 +14,7 @@ using namespace std;
 namespace server_side {
      // the following class was created for saving the socket ID
     class mySocket {
-    private:
+    public:
         int socketID;
     public:
         mySocket(int id) {

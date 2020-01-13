@@ -15,7 +15,6 @@
 class MatrixSolverBestFS : public Solver<MatrixProblem, string> {
 private:
     ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
-
     ISearchable<pair<int, int>>* searchableMatrix;
 public :
 

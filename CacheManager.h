@@ -12,7 +12,6 @@ using namespace std;
 //the problem always represented by string
 template< typename S>
 class CacheManager {
-
 public:
     //we will get the problem
     virtual bool find(string problem) =0;

@@ -10,9 +10,10 @@
 #include "string.h"
 using namespace std;
 // will receive a generic problem and solution
-template <class P, typename S>
+template <typename P, typename S>
 class Solver{
-
+    //P problem;
+    //S solution;
 public:
    // virtual string solve(string problem) = 0;
     virtual S solve(P) = 0;
