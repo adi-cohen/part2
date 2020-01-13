@@ -14,8 +14,8 @@
 #include <sstream>
 #include "strstream"
 #include "mySocket.h"
-#define TIME_OUT_FIRST 20
-#define TIME_OUT 1
+#define TIME_OUT_FIRST 30
+#define TIME_OUT 10
 
 using namespace std;
 // the following method will activate the client handler over the current connected client

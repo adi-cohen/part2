@@ -14,14 +14,13 @@
 
 #ifndef PART2_MYTESTCLIENTHANDLER_H
 #define PART2_MYTESTCLIENTHANDLER_H
-template<typename P, typename S>
+template<class P, class S>
 class MyTestClientHandler : public ClientHandler {
 private:
     Solver<P, S> *solver;
-
-    CacheManager<P,S> *cacheManager{};
+    CacheManager<S> *cacheManager{};
 public:
-    MyTestClientHandler(Solver<P, S> *sol, CacheManager<P, S> *cache) {
+    MyTestClientHandler(Solver<P, S> *sol, CacheManager<S> *cache) {
         this->solver = sol;
         this->cacheManager = cache;
     }
