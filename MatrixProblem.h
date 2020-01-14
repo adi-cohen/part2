@@ -107,21 +107,34 @@ public:
         pair<int, int> currentLocation = currentState->getState();
         int currentRow = currentLocation.first;
         int currentCol = currentLocation.second;
+        //we check if the state around the current state is in the matrix limits
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
             State<pair<int, int>> *upFromCurrentState = getStateByRowAndCol(currentRow + 1, currentCol);
-            possibleState.push_back(upFromCurrentState);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (upFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(upFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow - 1, currentCol)) {
             State<pair<int, int>> *downFromCurrentState = getStateByRowAndCol(currentRow - 1, currentCol);
-            possibleState.push_back(downFromCurrentState);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (downFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(downFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
             State<pair<int, int>> *leftFromCurrentState = getStateByRowAndCol(currentRow, currentCol - 1);
-            possibleState.push_back(leftFromCurrentState);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (leftFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(leftFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
             State<pair<int, int>> *rightFromCurrentState = getStateByRowAndCol(currentRow, currentCol + 1);
-            possibleState.push_back(rightFromCurrentState);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (rightFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(rightFromCurrentState);
+            }
         }
         return possibleState;
     }
@@ -146,6 +159,7 @@ public:
     //convert the matrix to string for searching in file name using hash function
     string toString() {
         string matrixString;
+        // insert all the data of the matrix to string
         for (int row = 0; row < numOfRow; row++) {
             for (int col = 0; col < numOfCol; col++) {
                 int vertexCost = (matrix.at(row)).at(col)->getCost();
@@ -154,8 +168,9 @@ public:
             }
             matrixString.append("\n");
         }
-
+        //make hash on the string that represent the matrix
         size_t hashProblem = hash<string>{}(matrixString);
+        //convert the hash to string
         string hashMatrix = to_string(hashProblem);
         return hashMatrix;
     }
@@ -164,6 +179,7 @@ public:
         return currentState->getState();
     }
 
+    //when we use this function we insert two states and get the direction between them
     string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState) override {
         int currentStateRow = currentState->getState().first;
         int currentStateCol = currentState->getState().second;
