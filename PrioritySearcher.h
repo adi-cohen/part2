@@ -65,18 +65,18 @@ public:
             // put in the deque the direction that the state was came from
             State<pair<int,int>>* currentState = s;
             State<pair<int,int>>* prevState = s->getCameFrom();
-            path.push_back(searchable->getDirection(currentState,prevState));
+            path.push_back(searchable->getDirection(prevState,currentState));
             //path.push_front(s->getCameFromDir());
             // increment the loop by the following command
             s = s->getCameFrom();
         }
 
         // use an iterator to save the path of the state s
-        auto it = path.begin();
+        auto it = path.end()-1;
         ans += *it;
-        it++;
+        it--;
 
-        for (; it != path.end(); it++) {
+        for (; it >= path.begin(); it--) {
             ans += ",";
             ans += *it;
         }
