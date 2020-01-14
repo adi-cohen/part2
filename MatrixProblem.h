@@ -19,7 +19,7 @@ using namespace std;
 // of find the shortest path in a matrix maze.
 class MatrixProblem : public ISearchable<pair<int, int>> {
 private:
-    vector<vector<State<pair<int, int>> *>> *matrix; // represents the matrix as vector of vector of states
+    vector<vector<State<pair<int, int>> *>> matrix; // represents the matrix as vector of vector of states
     int numOfRow;
     int numOfCol;
     State<pair<int, int>> *initState; // the source/enter state the first int is the row and second the column
@@ -30,8 +30,8 @@ private:
 public:
     //we will get vector of string
     //each string in the vector represent row in the matrix
-    vector<vector<State<pair<int, int>> *>> *buildMatrix(vector<string> matrixString, int row, int col) {
-        vector<vector<State<pair<int, int>> *>> *matrixVector;
+    vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row, int col) {
+        vector<vector<State<pair<int, int>> *>> matrixVector;
         vector<State<pair<int, int>> *> lineVector;
         int currentRow;
         int currentCol = 0;
@@ -40,7 +40,7 @@ public:
             //we get the row as string separated by ","
             //we insert every number to his location.
             string rowString = matrixString.at(currentRow);
-            vector<State<pair<int, int>> *>::iterator currentColIt = lineVector.begin();
+            //vector<State<pair<int, int>> *>::iterator currentColIt = lineVector.begin();
             stringstream ss(rowString);
             string valStr;
             //while we have more numbers in the string
@@ -52,12 +52,13 @@ public:
                 State<pair<int, int>> *currentState;
                 currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost);
                 //insert the new state to the to the fit col in the line vector
-                *currentColIt = currentState;
-                currentColIt++;
+                lineVector.push_back(currentState);
+                //*currentColIt.operator->(   ) = currentState;
+                //++currentColIt;
                 currentCol += 1;
             }
             //insert the row to the matrix
-            matrixVector->at(currentRow) = lineVector;
+            matrixVector.push_back(lineVector);
         }
         return matrixVector;
     }
@@ -71,8 +72,8 @@ public:
         this->matrix = buildMatrix(matrixInString, numOfRow, numOfCol);
         this->startLocation = startLoc;
         this->endLocation = goalLoc;
-        this->initState = (this->matrix->at(startLocation.first)).at(startLocation.second);
-        this->initState = (this->matrix->at(endLocation.first)).at(endLocation.second);
+        this->initState = (this->matrix.at(startLocation.first)).at(startLocation.second);
+        this->initState = (this->matrix.at(endLocation.first)).at(endLocation.second);
     }
 
 
@@ -138,7 +139,7 @@ public:
 
     //get the state in specific index in the matrix.
     State<pair<int, int>> *getPossitionInMatrix(int row, int col) {
-        State<pair<int, int>> *state = (matrix->at(row)).at(col);
+        State<pair<int, int>> *state = (matrix.at(row)).at(col);
         return state;
     }
 
@@ -147,7 +148,7 @@ public:
         string matrixString;
         for (int row = 0; row < numOfRow; row++) {
             for (int col = 0; col < numOfCol; col++) {
-                int vertexCost = (matrix->at(row)).at(col)->getCost();
+                int vertexCost = (matrix.at(row)).at(col)->getCost();
                 string vertex = to_string(vertexCost);
                 matrixString.append(vertex + ",");
             }

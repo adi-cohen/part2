@@ -50,11 +50,11 @@ int mySerialServer::open(int port, ClientHandler* handler) {
     struct sockaddr_in serv_addr, cli_addr;
     int n;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
+    if (sockfd ==-1 ) {
         std::cout << ("ERROR opening socket") << std::endl;
     }
     // verify all the data is zero at the beginning
-    bzero((char *) &serv_addr, sizeof(serv_addr));
+    //bzero((char *) &serv_addr, sizeof(serv_addr));
     // set the fields of sockaddr_in struct
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
