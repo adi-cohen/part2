@@ -11,6 +11,8 @@
 #include "FileCacheManager.h"
 #include "map"
 #include "unordered_map"
+#include <iostream>
+
 
 template< typename S>
 //the problem always will be represented by string
@@ -59,11 +61,13 @@ public:
             insertNewObjToList(problem, solution);
 
         //DISK
-        string fileName = problem;
+        size_t hashProblem = hash<string>{}(problem);
+        string fileName = to_string(hashProblem);
+        //string fileName = problem;
         fstream io_file;
         io_file.open(fileName, ios::binary | ios::out);
         if (!io_file.is_open()) {
-            throw "error in opening the file";
+            cout << "error in opening the file" << endl;
         }
         //now insert to the file
         io_file.write((char *) &solution, sizeof(solution));

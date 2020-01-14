@@ -130,17 +130,6 @@ public:
         }
     }
 
-    /*
-    * Case Sensitive Implementation of endsWith()
-    * It checks if the string 'mainStr' ends with given string 'toMatch'
-    */
-    bool endsWith(const string &mainStr, const std::string &toMatch) {
-        if (mainStr.size() >= toMatch.size() &&
-            mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
-            return true;
-        else
-            return false;
-    }
 };
 
 #endif //PART2_MYCLIENTHANDLER_H
