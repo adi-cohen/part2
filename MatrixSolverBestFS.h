@@ -10,14 +10,15 @@
 #include "Isearcher.h"
 #include "BestFirstSearch.h"
 
-// will receive a generic problem and solution
-//template<class P, typename S, typename T>
+//we receive specific problem type and solution type for our solver
 class MatrixSolverBestFS : public Solver<MatrixProblem, string> {
 private:
+    //we have specific searcher - BestFirstSearch
     ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
-    ISearchable<pair<int, int>>* searchableMatrix;
+    // we have specific searchable - searchableMatrix
+    //ISearchable<pair<int, int>>* searchableMatrix;
 public :
-
+    //we will solve the problem by using the function search of BestFirstSearch
     string solve(MatrixProblem problem) override {
         return this->searcher->search(&problem);
     }
