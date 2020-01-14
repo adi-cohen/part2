@@ -11,8 +11,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
-#include <sstream>
-#include "strstream"
 #include "mySocket.h"
 #define TIME_OUT_FIRST 30
 #define TIME_OUT 10

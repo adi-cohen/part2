@@ -30,7 +30,7 @@ private:
 public:
     //we will get vector of string
     //each string in the vector represent row in the matrix
-    vector<vector<State<pair<int, int>> *>> *buildMatrix(vector<string> *matrixString, int row, int col) {
+    vector<vector<State<pair<int, int>> *>> *buildMatrix(vector<string> matrixString, int row, int col) {
         vector<vector<State<pair<int, int>> *>> *matrixVector;
         vector<State<pair<int, int>> *> lineVector;
         int currentRow;
@@ -39,7 +39,7 @@ public:
         for (currentRow = 0; currentRow < row; currentRow++) {
             //we get the row as string separated by ","
             //we insert every number to his location.
-            string rowString = matrixString->at(currentRow);
+            string rowString = matrixString.at(currentRow);
             vector<State<pair<int, int>> *>::iterator currentColIt = lineVector.begin();
             stringstream ss(rowString);
             string valStr;
@@ -63,7 +63,7 @@ public:
     }
 
 // constructor
-    MatrixProblem(vector<string> *matrixInString, pair<int, int> startLoc, pair<int, int> goalLoc, int matrixRow,
+    MatrixProblem(vector<string> matrixInString, pair<int, int> startLoc, pair<int, int> goalLoc, int matrixRow,
                   int matrixCol) {
 
         this->numOfCol = matrixCol;

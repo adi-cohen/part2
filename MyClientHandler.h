@@ -35,7 +35,7 @@ public:
 
 
     void handleClient(int client_socket) override {
-        vector<string> *matrixStringVector;
+        vector<string> matrixStringVector ;
         pair<int, int> startLocation;
         pair<int, int> goalLocation;
         int matrixRow = 0;
@@ -72,7 +72,7 @@ public:
                 //we check iy bu counting by the number comma of in line
                 if (count(firstPart.begin(), firstPart.end(), ',') + 1 == matrixCol) {
                     //we will insert every line of the matrix to the vector
-                    matrixStringVector->push_back(firstPart);
+                    matrixStringVector.push_back(firstPart);
                     matrixRow += 1;
                 } else {
                     //we got noe the start position and end position
