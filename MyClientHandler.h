@@ -4,7 +4,6 @@
 
 #ifndef PART2_MYCLIENTHANDLER_H
 #define PART2_MYCLIENTHANDLER_H
-
 #include <vector>
 #include "ClientHandler.h"
 #include "Solver.h"
@@ -21,9 +20,9 @@
 class MyClientHandler : public ClientHandler {
 private:
     Solver<MatrixProblem, string> *solver;
-    CacheManager< string> *cacheManager{};
+    CacheManager<string> *cacheManager{};
 public:
-    MyClientHandler( CacheManager<string> *cache) {
+    MyClientHandler(CacheManager<string> *cache) {
         //this->solver = solv;
         this->cacheManager = cache;
     }
@@ -35,7 +34,7 @@ public:
 
 
     void handleClient(int client_socket) override {
-        vector<string> matrixStringVector ;
+        vector<string> matrixStringVector;
         pair<int, int> startLocation;
         pair<int, int> goalLocation;
         int matrixRow = 0;
@@ -44,11 +43,14 @@ public:
         string firstBuffer = "";
         int index = 0;
         //while we didnt read the line "end"
+
         while (inFile) {
             //we will read chunks of data from the client
             // and split it to lines by \n
             char buffer[1024] = {0};
-            read(client_socket, buffer, 1024);
+            if (firstBuffer.find("end\n") == string::npos) {
+                read(client_socket, buffer, 1024);
+            }
             string secondBuffer = buffer;
             firstBuffer = firstBuffer + secondBuffer;
             const string firstPart = firstBuffer.substr(0, firstBuffer.find("\n")); //all tha values from start to \n
@@ -83,17 +85,16 @@ public:
                     int k = 0;
                     while (getline(ss, valStr, ',')) {
                         int val = stoi(valStr);
-                        values.at(k) = val;
+                        values.push_back(val);
                         k++;
                     }
                     if (index == 0) {
                         //we are in the line of the start position
-                        startLocation = pair<int,int>(values.at(0), values.at(1));
-                        index+=1;
-                    }
-                    else {
+                        startLocation = pair<int, int>(values.at(0), values.at(1));
+                        index += 1;
+                    } else {
                         //we are in the line of the end position
-                        goalLocation = pair<int,int>(values.at(0), values.at(1));
+                        goalLocation = pair<int, int>(values.at(0), values.at(1));
                     }
                 }
             }
@@ -102,7 +103,8 @@ public:
         }
         //after we read all the data from the file
         //creating the matrixProblem
-        MatrixProblem* matrix = new MatrixProblem(matrixStringVector,startLocation,goalLocation,matrixRow,matrixCol);
+        MatrixProblem *matrix = new MatrixProblem(matrixStringVector, startLocation, goalLocation, matrixRow,
+                                                  matrixCol);
         //create string that represent the problem
         string matrixString = matrix->toString();
 
@@ -124,6 +126,18 @@ public:
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         }
+    }
+
+    /*
+    * Case Sensitive Implementation of endsWith()
+    * It checks if the string 'mainStr' ends with given string 'toMatch'
+    */
+    bool endsWith(const string &mainStr, const std::string &toMatch) {
+        if (mainStr.size() >= toMatch.size() &&
+            mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
+            return true;
+        else
+            return false;
     }
 };
 
