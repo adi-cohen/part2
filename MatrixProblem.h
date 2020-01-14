@@ -129,8 +129,8 @@ public:
     //check if row number and column number is in the matrix limits
     //between 0 to numOfRow/numOfCol.
     bool isInMatrixLimits(int row, int col) {
-        if (row <= this->numOfRow & row >= 0) {
-            if (col <= this->numOfCol & col >= 0) {
+        if (row <= this->numOfRow-1 & row >= 0) {
+            if (col <= this->numOfCol-1 & col >= 0) {
                 return true;
             }
         }
