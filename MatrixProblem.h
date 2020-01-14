@@ -32,11 +32,10 @@ public:
     //each string in the vector represent row in the matrix
     vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row, int col) {
         vector<vector<State<pair<int, int>> *>> matrixVector;
-
         int currentRow;
-        int currentCol = 0;
         //for every row we got from the client
         for (currentRow = 0; currentRow < row; currentRow++) {
+            int currentCol = 0;
             vector<State<pair<int, int>> *> lineVector;
             //we get the row as string separated by ","
             //we insert every number to his location.
@@ -74,7 +73,7 @@ public:
         this->startLocation = startLoc;
         this->endLocation = goalLoc;
         this->initState = (this->matrix.at(startLocation.first)).at(startLocation.second);
-        this->initState = (this->matrix.at(endLocation.first)).at(endLocation.second);
+        this->goalState = (this->matrix.at(endLocation.first)).at(endLocation.second);
     }
 
 
