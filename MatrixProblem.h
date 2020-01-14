@@ -108,19 +108,19 @@ public:
         int currentRow = currentLocation.first;
         int currentCol = currentLocation.second;
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
-            State<pair<int, int>> *upFromCurrentState = getPossitionInMatrix(currentRow + 1, currentCol);
+            State<pair<int, int>> *upFromCurrentState = getStateByRowAndCol(currentRow + 1, currentCol);
             possibleState.push_back(upFromCurrentState);
         }
         if (isInMatrixLimits(currentRow - 1, currentCol)) {
-            State<pair<int, int>> *downFromCurrentState = getPossitionInMatrix(currentRow - 1, currentCol);
+            State<pair<int, int>> *downFromCurrentState = getStateByRowAndCol(currentRow - 1, currentCol);
             possibleState.push_back(downFromCurrentState);
         }
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
-            State<pair<int, int>> *leftFromCurrentState = getPossitionInMatrix(currentRow, currentCol - 1);
+            State<pair<int, int>> *leftFromCurrentState = getStateByRowAndCol(currentRow, currentCol - 1);
             possibleState.push_back(leftFromCurrentState);
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
-            State<pair<int, int>> *rightFromCurrentState = getPossitionInMatrix(currentRow, currentCol + 1);
+            State<pair<int, int>> *rightFromCurrentState = getStateByRowAndCol(currentRow, currentCol + 1);
             possibleState.push_back(rightFromCurrentState);
         }
         return possibleState;
@@ -129,8 +129,8 @@ public:
     //check if row number and column number is in the matrix limits
     //between 0 to numOfRow/numOfCol.
     bool isInMatrixLimits(int row, int col) {
-        if (row <= this->numOfRow-1 & row >= 0) {
-            if (col <= this->numOfCol-1 & col >= 0) {
+        if (row <= this->numOfRow - 1 & row >= 0) {
+            if (col <= this->numOfCol - 1 & col >= 0) {
                 return true;
             }
         }
@@ -138,7 +138,7 @@ public:
     }
 
     //get the state in specific index in the matrix.
-    State<pair<int, int>> *getPossitionInMatrix(int row, int col) {
+    State<pair<int, int>> *getStateByRowAndCol(int row, int col) {
         State<pair<int, int>> *state = (matrix.at(row)).at(col);
         return state;
     }
@@ -155,6 +155,30 @@ public:
             matrixString.append("\n");
         }
         return matrixString;
+    }
+
+    pair<int, int> getLocationOfStateInMatrix(State<pair<int, int>> *currentState) {
+        return currentState->getState();
+    }
+
+    string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState) {
+        int currentStateRow = currentState->getState().first;
+        int currentStateCol = currentState->getState().second;
+        int prevStateCol = previousState->getState().first;
+        int prevStateRow = previousState->getState().second;
+
+        if (currentStateRow < prevStateRow) {
+            return "Down";
+        }
+        if (currentStateRow > prevStateRow) {
+            return "Up";
+        }
+        if (currentStateCol > prevStateCol) {
+            return "Right";
+        }
+        if (currentStateCol < prevStateCol) {
+            return "Left";
+        }
     }
 };
 
