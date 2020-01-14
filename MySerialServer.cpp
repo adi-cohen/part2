@@ -11,8 +11,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
-#include <sstream>
-#include "strstream"
 #include "mySocket.h"
 #define TIME_OUT_FIRST 30
 #define TIME_OUT 10
@@ -37,7 +35,9 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
         // if the a new socket was accepted we send it to the
         server_side::mySocket in(newsockfd);
         // calling the client handler
+        cout << "acceptClient" << endl;
         clientHandler->handleClient(newsockfd);
+        cout << "end with client" << endl;
         ::close(newsockfd);
         setsockopt(*sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
     }
@@ -49,21 +49,22 @@ int mySerialServer::open(int port, ClientHandler* handler) {
     int sockfd, newsockfd;
     socklen_t clilen;
     char buffer[256];
-    struct sockaddr_in serv_addr, cli_addr;
+    struct sockaddr_in  cli_addr;
     int n;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
+    if (sockfd ==-1 ) {
         std::cout << ("ERROR opening socket") << std::endl;
     }
     // verify all the data is zero at the beginning
-    bzero((char *) &serv_addr, sizeof(serv_addr));
+    //bzero((char *) &serv_addr, sizeof(serv_addr));
     // set the fields of sockaddr_in struct
+    sockaddr_in serv_addr;
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(port);
     // binding stage:
     if (bind(sockfd, (struct sockaddr *) &serv_addr,
-             sizeof(serv_addr)) < 0)
+             sizeof(serv_addr)) ==-1 )
         std::cout << ("ERROR on binding") << std::endl ;
     // create a struct for the timeout of the client's waiting
     struct timeval tv;

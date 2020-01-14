@@ -4,7 +4,6 @@
 
 #ifndef PART2_MYCLIENTHANDLER_H
 #define PART2_MYCLIENTHANDLER_H
-
 #include <vector>
 #include "ClientHandler.h"
 #include "Solver.h"
@@ -21,9 +20,9 @@
 class MyClientHandler : public ClientHandler {
 private:
     Solver<MatrixProblem, string> *solver;
-    CacheManager< string> *cacheManager{};
+    CacheManager<string> *cacheManager{};
 public:
-    MyClientHandler( CacheManager<string> *cache) {
+    MyClientHandler(CacheManager<string> *cache) {
         //this->solver = solv;
         this->cacheManager = cache;
     }
@@ -35,7 +34,7 @@ public:
 
 
     void handleClient(int client_socket) override {
-        vector<string> *matrixStringVector;
+        vector<string> matrixStringVector;
         pair<int, int> startLocation;
         pair<int, int> goalLocation;
         int matrixRow = 0;
@@ -44,14 +43,17 @@ public:
         string firstBuffer = "";
         int index = 0;
         //while we didnt read the line "end"
+
         while (inFile) {
             //we will read chunks of data from the client
             // and split it to lines by \n
             char buffer[1024] = {0};
-            read(client_socket, buffer, 1024);
+            if (firstBuffer.find("end\n") == string::npos) {
+                read(client_socket, buffer, 1024);
+            }
             string secondBuffer = buffer;
             firstBuffer = firstBuffer + secondBuffer;
-            string firstPart = firstBuffer.substr(0, firstBuffer.find("\n")); //all tha values from start to \n
+            const string firstPart = firstBuffer.substr(0, firstBuffer.find("\n")); //all tha values from start to \n
             int startSecondPart = firstBuffer.find("\n") + 1;
             string secondPart = firstBuffer.substr(
                     startSecondPart, firstBuffer.length()); //all the values from \n to end
@@ -72,7 +74,7 @@ public:
                 //we check iy bu counting by the number comma of in line
                 if (count(firstPart.begin(), firstPart.end(), ',') + 1 == matrixCol) {
                     //we will insert every line of the matrix to the vector
-                    matrixStringVector->push_back(firstPart);
+                    matrixStringVector.push_back(firstPart);
                     matrixRow += 1;
                 } else {
                     //we got noe the start position and end position
@@ -83,17 +85,16 @@ public:
                     int k = 0;
                     while (getline(ss, valStr, ',')) {
                         int val = stoi(valStr);
-                        values.at(k) = val;
+                        values.push_back(val);
                         k++;
                     }
                     if (index == 0) {
                         //we are in the line of the start position
-                        startLocation = pair<int,int>(values.at(0), values.at(1));
-                        index+=1;
-                    }
-                    else {
+                        startLocation = pair<int, int>(values.at(0), values.at(1));
+                        index += 1;
+                    } else {
                         //we are in the line of the end position
-                        goalLocation = pair<int,int>(values.at(0), values.at(1));
+                        goalLocation = pair<int, int>(values.at(0), values.at(1));
                     }
                 }
             }
@@ -102,17 +103,20 @@ public:
         }
         //after we read all the data from the file
         //creating the matrixProblem
-        MatrixProblem* matrix = new MatrixProblem(matrixStringVector,startLocation,goalLocation,matrixRow,matrixCol);
-        //create string that represent the problem
-        string matrixString = matrix->toString();
+        //we are decrease one from number of row and column because we add one in the last iteration,
+        //but we didnt really add one more line and column
+        MatrixProblem *matrix = new MatrixProblem(matrixStringVector, startLocation, goalLocation, matrixRow,
+                                                  matrixCol);
+        //create string that represent the problem with hash function
+        string matrixStringHash = matrix->toString();
 
         //OA - MatrixSolverBestFS
         this->solver = new MatrixSolverBestFS();
 
 
         //if we already solve this problem
-        if (this->cacheManager->find(matrixString)) {
-            string solution = this->cacheManager->get(matrixString);
+        if (this->cacheManager->find(matrixStringHash)) {
+            string solution = this->cacheManager->get(matrixStringHash);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         } else {
@@ -120,11 +124,12 @@ public:
             //we will sent to solver the problem as matrix
             string solution = this->solver->solve(*matrix);
             //we will save the problem as matrix string and the solution as matrix string
-            this->cacheManager->save(matrixString, solution);
+            this->cacheManager->save(matrixStringHash, solution);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         }
     }
+
 };
 
 #endif //PART2_MYCLIENTHANDLER_H
