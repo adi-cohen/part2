@@ -32,11 +32,12 @@ public:
     //each string in the vector represent row in the matrix
     vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row, int col) {
         vector<vector<State<pair<int, int>> *>> matrixVector;
-        vector<State<pair<int, int>> *> lineVector;
+
         int currentRow;
         int currentCol = 0;
         //for every row we got from the client
         for (currentRow = 0; currentRow < row; currentRow++) {
+            vector<State<pair<int, int>> *> lineVector;
             //we get the row as string separated by ","
             //we insert every number to his location.
             string rowString = matrixString.at(currentRow);
