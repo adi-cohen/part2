@@ -107,16 +107,16 @@ public:
         //but we didnt really add one more line and column
         MatrixProblem *matrix = new MatrixProblem(matrixStringVector, startLocation, goalLocation, matrixRow,
                                                   matrixCol);
-        //create string that represent the problem
-        string matrixString = matrix->toString();
+        //create string that represent the problem with hash function
+        string matrixStringHash = matrix->toString();
 
         //OA - MatrixSolverBestFS
         this->solver = new MatrixSolverBestFS();
 
 
         //if we already solve this problem
-        if (this->cacheManager->find(matrixString)) {
-            string solution = this->cacheManager->get(matrixString);
+        if (this->cacheManager->find(matrixStringHash)) {
+            string solution = this->cacheManager->get(matrixStringHash);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         } else {
@@ -124,7 +124,7 @@ public:
             //we will sent to solver the problem as matrix
             string solution = this->solver->solve(*matrix);
             //we will save the problem as matrix string and the solution as matrix string
-            this->cacheManager->save(matrixString, solution);
+            this->cacheManager->save(matrixStringHash, solution);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         }

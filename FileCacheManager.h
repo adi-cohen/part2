@@ -55,15 +55,15 @@ public:
         }
     }
 
+    //our problem is hashed string
     void save(string problem, S solution) override {
         //CACHE
         //we need to insert the obj to cache
             insertNewObjToList(problem, solution);
 
         //DISK
-        size_t hashProblem = hash<string>{}(problem);
-        string fileName = to_string(hashProblem);
-        //string fileName = problem;
+
+        string fileName = problem;
         fstream io_file;
         io_file.open(fileName, ios::binary | ios::out);
         if (!io_file.is_open()) {

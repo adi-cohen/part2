@@ -143,7 +143,7 @@ public:
         return state;
     }
 
-    //convert the matrix to string for searching in file name
+    //convert the matrix to string for searching in file name using hash function
     string toString() {
         string matrixString;
         for (int row = 0; row < numOfRow; row++) {
@@ -154,7 +154,10 @@ public:
             }
             matrixString.append("\n");
         }
-        return matrixString;
+
+        size_t hashProblem = hash<string>{}(matrixString);
+        string hashMatrix = to_string(hashProblem);
+        return hashMatrix;
     }
 
     pair<int, int> getLocationOfStateInMatrix(State<pair<int, int>> *currentState) {
