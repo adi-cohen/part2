@@ -63,7 +63,10 @@ public:
         // while the state isn't the source state
         while (!(s->Equals(initState))) {
             // put in the deque the direction that the state was came from
-            path.push_front(s->getCameFromDir());
+            State<pair<int,int>>* currentState = s;
+            State<pair<int,int>>* prevState = s->getCameFrom();
+            path.push_back(searchable->getDirection(currentState,prevState));
+            //path.push_front(s->getCameFromDir());
             // increment the loop by the following command
             s = s->getCameFrom();
         }

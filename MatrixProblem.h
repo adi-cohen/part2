@@ -161,11 +161,11 @@ public:
         return currentState->getState();
     }
 
-    string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState) {
+    string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState) override {
         int currentStateRow = currentState->getState().first;
         int currentStateCol = currentState->getState().second;
-        int prevStateCol = previousState->getState().first;
-        int prevStateRow = previousState->getState().second;
+        int prevStateRow = previousState->getState().first;
+        int prevStateCol = previousState->getState().second;
 
         if (currentStateRow < prevStateRow) {
             return "Down";
