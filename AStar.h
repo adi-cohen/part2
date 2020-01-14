@@ -48,7 +48,6 @@ public:
                    s->setCost(s->getCost() + getManDist(s,searchable->getGoalState()) - getManDist(n,searchable->getGoalState()));
                    this->addToOpenList(s);
                }
-
                // if the state wasn't found in the closed list but was found in the open list, we will check if it has smaller
                // cost then what is already found in the open list and if it has we will replace the old cost with the new one
                else if (!(isInSet(closed,s)))

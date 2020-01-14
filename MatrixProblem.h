@@ -62,7 +62,7 @@ public:
         return matrixVector;
     }
 
-// constructor
+    // constructor
     MatrixProblem(vector<string> *matrixInString, pair<int, int> startLoc, pair<int, int> goalLoc, int matrixRow,
                   int matrixCol) {
 

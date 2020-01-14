@@ -17,11 +17,9 @@ private:
     ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
     ISearchable<pair<int, int>>* searchableMatrix;
 public :
-
     string solve(MatrixProblem problem) override {
         return this->searcher->search(&problem);
     }
-
 };
 
 #endif //PART2_MATRIXSOLVERBESTFS_H
