@@ -199,6 +199,7 @@ public:
         if (currentStateCol < prevStateCol) {
             return "Right";
         }
+
     }
 };
 

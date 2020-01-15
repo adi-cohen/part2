@@ -62,7 +62,6 @@ public:
             insertNewObjToList(problem, solution);
 
         //DISK
-
         string fileName = problem;
         fstream io_file;
         io_file.open(fileName, ios::binary | ios::out);
