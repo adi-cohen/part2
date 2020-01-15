@@ -8,23 +8,23 @@
 
 
 // This class implements the PrioritySearcher abstract class as a A* algorithm
-template<class solution, class T>
-class AStar : public PrioritySearcher<solution, T> {
+template<class S, class T>
+class AStar : public PrioritySearcher<S, T> {
 public:
     // This method gets a searchable problem runs the A* algorithm and returns the minimal path it found
-   solution search(ISearchable<T> *searchable) {
+   S search(ISearchable<T> *searchable) {
        // getting the source vertex
        State<T> *initState = searchable->getInitialState();
        // we set the vertex s: s.f = s.g + s.h
        initState->setCost(initState->getCost() + getManDist(initState, searchable->getGoalState()));
        // we enqueue the first vertex s to the open queue
-       PrioritySearcher<solution, T>::addToOpenList(initState);
+       PrioritySearcher<S, T>::addToOpenList(initState);
        // creates the closed queue
        multiset<State<T> *, CompareCost<T>> closed;
        // while the open queue isn't empty
-       while (PrioritySearcher<solution, T>::openList.size() > 0) {
+       while (PrioritySearcher<S, T>::openList.size() > 0) {
            // inherited from PrioritySearcher, removes the least state
-           State<T>* n = PrioritySearcher<solution, T>::popOpenList();
+           State<T>* n = PrioritySearcher<S, T>::popOpenList();
            closed.insert(n); // We insert it into the close list so it won't be processed again
            // If we have reached the goal state we will trace back the path we have found and return it
            if (searchable->isGoalState(n))
@@ -42,7 +42,7 @@ public:
            for (auto it = successors.begin(); it != successors.end(); it++) {
                State<T>* s = *it;
                // if the state isn't found in the open list and also the not in the closed list we will add it to the open list
-               if ((!isInSet(PrioritySearcher<solution, T>::openList,s)) && (!(isInSet(closed,s)))) {
+               if ((!isInSet(PrioritySearcher<S, T>::openList,s)) && (!(isInSet(closed,s)))) {
                    // We add to the cost of each state his distance from the goal state and decrease the distance
                    // from goal state from his parent state
                    s->setCost(s->getCost() + getManDist(s,searchable->getGoalState()) - getManDist(n,searchable->getGoalState()));
@@ -70,14 +70,14 @@ public:
     // the open list we will replace it's cost with the new cost
     virtual void saveMin(State<T>* currState)
     {
-        for (auto it = PrioritySearcher<solution,T>::openList.begin(); it != PrioritySearcher<solution,T>::openList.end(); it++)
+        for (auto it = PrioritySearcher<S,T>::openList.begin(); it != PrioritySearcher<S,T>::openList.end(); it++)
         {
             State<T>* s = *it;
             if(s->Equals(currState))
             {
                 if (currState->getCost() < s->getCost())
                 {
-                    PrioritySearcher<solution,T>::openList.erase(it);
+                    PrioritySearcher<S,T>::openList.erase(it);
                     this->addToOpenList(currState);
                 }
                 return;
