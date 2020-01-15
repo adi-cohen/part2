@@ -19,8 +19,8 @@ protected:
     * to the largest cost to represent an priority queue
     */
     multiset<State<T> *, CompareCost<T>> openList;
-    int evaluatedNodes = 0;
-    int pathLength = 0;
+    int evaluatedNodes;
+    int pathLength;
 
     /* When we insert a state to the open list we will insert it into the open list
      * and the multiset will sort itself by the CompareCost object function.
@@ -30,7 +30,7 @@ protected:
     }
 
     /* When we will want to extract a state from the open list we will erase it from the open list,
-     * return it, and the multiset will sort itself accordingly
+     * return it, and the multiset will sort itself accordingly.
      */
     State<T> *popOpenList() {
         evaluatedNodes++;
@@ -41,6 +41,10 @@ protected:
     }
 
 public:
+    PrioritySearcher()
+    {
+        evaluatedNodes = 0;
+    }
     // will be implemented in the Best First Search
     virtual S search(ISearchable<T> *searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm
@@ -63,17 +67,20 @@ public:
         // while the state isn't the source state
         while (!(s->Equals(initState))) {
             // put in the deque the direction that the state was came from
-            path.push_front(s->getCameFromDir());
+            State<pair<int,int>>* currentState = s;
+            State<pair<int,int>>* prevState = s->getCameFrom();
+            path.push_back(searchable->getDirection(prevState,currentState));
+            //path.push_front(s->getCameFromDir());
             // increment the loop by the following command
             s = s->getCameFrom();
         }
 
         // use an iterator to save the path of the state s
-        auto it = path.begin();
+        auto it = path.end()-1;
         ans += *it;
-        it++;
+        it--;
 
-        for (; it != path.end(); it++) {
+        for (; it >= path.begin(); it--) {
             ans += ",";
             ans += *it;
         }

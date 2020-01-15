@@ -58,7 +58,7 @@ public:
     }
 
     // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    S backTrace(State<T>* currState, ISearchable<T> *searchable) {
+    string backTrace(State<T>* currState, ISearchable<T> *searchable) {
         deque<string> path;
         string ans = "";
         this->pathLength = currState->getCost();

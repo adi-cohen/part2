@@ -19,7 +19,7 @@ using namespace std;
 // of find the shortest path in a matrix maze.
 class MatrixProblem : public ISearchable<pair<int, int>> {
 private:
-    vector<vector<State<pair<int, int>> *>> *matrix; // represents the matrix as vector of vector of states
+    vector<vector<State<pair<int, int>> *>> matrix; // represents the matrix as vector of vector of states
     int numOfRow;
     int numOfCol;
     State<pair<int, int>> *initState; // the source/enter state the first int is the row and second the column
@@ -30,17 +30,17 @@ private:
 public:
     //we will get vector of string
     //each string in the vector represent row in the matrix
-    vector<vector<State<pair<int, int>> *>> *buildMatrix(vector<string> *matrixString, int row, int col) {
-        vector<vector<State<pair<int, int>> *>> *matrixVector;
-        vector<State<pair<int, int>> *> lineVector;
+    vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row, int col) {
+        vector<vector<State<pair<int, int>> *>> matrixVector;
         int currentRow;
-        int currentCol = 0;
         //for every row we got from the client
         for (currentRow = 0; currentRow < row; currentRow++) {
+            int currentCol = 0;
+            vector<State<pair<int, int>> *> lineVector;
             //we get the row as string separated by ","
             //we insert every number to his location.
-            string rowString = matrixString->at(currentRow);
-            vector<State<pair<int, int>> *>::iterator currentColIt = lineVector.begin();
+            string rowString = matrixString.at(currentRow);
+            //vector<State<pair<int, int>> *>::iterator currentColIt = lineVector.begin();
             stringstream ss(rowString);
             string valStr;
             //while we have more numbers in the string
@@ -49,21 +49,23 @@ public:
                 valStr.erase(remove(valStr.begin(), valStr.end(), ' '), valStr.end());
                 //convert from string to int
                 int cost = stoi(valStr);
+                int sumOfCosts = cost;
                 State<pair<int, int>> *currentState;
-                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost);
+                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost, sumOfCosts);
                 //insert the new state to the to the fit col in the line vector
-                *currentColIt = currentState;
-                currentColIt++;
+                lineVector.push_back(currentState);
+                //*currentColIt.operator->(   ) = currentState;
+                //++currentColIt;
                 currentCol += 1;
             }
             //insert the row to the matrix
-            matrixVector->at(currentRow) = lineVector;
+            matrixVector.push_back(lineVector);
         }
         return matrixVector;
     }
 
-    // constructor
-    MatrixProblem(vector<string> *matrixInString, pair<int, int> startLoc, pair<int, int> goalLoc, int matrixRow,
+// constructor
+    MatrixProblem(vector<string> matrixInString, pair<int, int> startLoc, pair<int, int> goalLoc, int matrixRow,
                   int matrixCol) {
 
         this->numOfCol = matrixCol;
@@ -71,8 +73,8 @@ public:
         this->matrix = buildMatrix(matrixInString, numOfRow, numOfCol);
         this->startLocation = startLoc;
         this->endLocation = goalLoc;
-        this->initState = (this->matrix->at(startLocation.first)).at(startLocation.second);
-        this->initState = (this->matrix->at(endLocation.first)).at(endLocation.second);
+        this->initState = (this->matrix.at(startLocation.first)).at(startLocation.second);
+        this->goalState = (this->matrix.at(endLocation.first)).at(endLocation.second);
     }
 
 
@@ -106,21 +108,34 @@ public:
         pair<int, int> currentLocation = currentState->getState();
         int currentRow = currentLocation.first;
         int currentCol = currentLocation.second;
+        //we check if the state around the current state is in the matrix limits
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
-            State<pair<int, int>> *upFromCurrentState = getPossitionInMatrix(currentRow + 1, currentCol);
-            possibleState.push_back(upFromCurrentState);
+            State<pair<int, int>> *upFromCurrentState = getStateByRowAndCol(currentRow + 1, currentCol);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (upFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(upFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow - 1, currentCol)) {
-            State<pair<int, int>> *downFromCurrentState = getPossitionInMatrix(currentRow - 1, currentCol);
-            possibleState.push_back(downFromCurrentState);
+            State<pair<int, int>> *downFromCurrentState = getStateByRowAndCol(currentRow - 1, currentCol);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (downFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(downFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
-            State<pair<int, int>> *leftFromCurrentState = getPossitionInMatrix(currentRow, currentCol - 1);
-            possibleState.push_back(leftFromCurrentState);
+            State<pair<int, int>> *leftFromCurrentState = getStateByRowAndCol(currentRow, currentCol - 1);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (leftFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(leftFromCurrentState);
+            }
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
-            State<pair<int, int>> *rightFromCurrentState = getPossitionInMatrix(currentRow, currentCol + 1);
-            possibleState.push_back(rightFromCurrentState);
+            State<pair<int, int>> *rightFromCurrentState = getStateByRowAndCol(currentRow, currentCol + 1);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (rightFromCurrentState->getCost()!= -1) {
+                possibleState.push_back(rightFromCurrentState);
+            }
         }
         return possibleState;
     }
@@ -128,8 +143,8 @@ public:
     //check if row number and column number is in the matrix limits
     //between 0 to numOfRow/numOfCol.
     bool isInMatrixLimits(int row, int col) {
-        if (row <= this->numOfRow & row >= 0) {
-            if (col <= this->numOfCol & col >= 0) {
+        if (row <= this->numOfRow - 1 & row >= 0) {
+            if (col <= this->numOfCol - 1 & col >= 0) {
                 return true;
             }
         }
@@ -137,23 +152,53 @@ public:
     }
 
     //get the state in specific index in the matrix.
-    State<pair<int, int>> *getPossitionInMatrix(int row, int col) {
-        State<pair<int, int>> *state = (matrix->at(row)).at(col);
+    State<pair<int, int>> *getStateByRowAndCol(int row, int col) {
+        State<pair<int, int>> *state = (matrix.at(row)).at(col);
         return state;
     }
 
-    //convert the matrix to string for searching in file name
+    //convert the matrix to string for searching in file name using hash function
     string toString() {
         string matrixString;
+        // insert all the data of the matrix to string
         for (int row = 0; row < numOfRow; row++) {
             for (int col = 0; col < numOfCol; col++) {
-                int vertexCost = (matrix->at(row)).at(col)->getCost();
+                int vertexCost = (matrix.at(row)).at(col)->getCost();
                 string vertex = to_string(vertexCost);
                 matrixString.append(vertex + ",");
             }
             matrixString.append("\n");
         }
-        return matrixString;
+        //make hash on the string that represent the matrix
+        size_t hashProblem = hash<string>{}(matrixString);
+        //convert the hash to string
+        string hashMatrix = to_string(hashProblem);
+        return hashMatrix;
+    }
+
+    pair<int, int> getLocationOfStateInMatrix(State<pair<int, int>> *currentState) {
+        return currentState->getState();
+    }
+
+    //when we use this function we insert two states and get the direction between them
+    string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState) override {
+        int currentStateRow = currentState->getState().first;
+        int currentStateCol = currentState->getState().second;
+        int prevStateRow = previousState->getState().first;
+        int prevStateCol = previousState->getState().second;
+
+        if (currentStateRow < prevStateRow) {
+            return "Down";
+        }
+        if (currentStateRow > prevStateRow) {
+            return "Up";
+        }
+        if (currentStateCol > prevStateCol) {
+            return "Left";
+        }
+        if (currentStateCol < prevStateCol) {
+            return "Right";
+        }
     }
 };
 

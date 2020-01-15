@@ -18,6 +18,7 @@ public:
     virtual int getProblemSize() = 0; // returns the size of the problem
     virtual bool isGoalState(State<T>* curState) = 0; // checks if a state is the goal state (for a case we have
     virtual string toString()=0;
+    virtual string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState)=0;
     // more than one goal state
     virtual ~ISearchable() {}
 };

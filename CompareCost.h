@@ -11,8 +11,8 @@
 template <class T>
 struct CompareCost {
 public:
-    bool operator()( State<T>* s1, State<T>* s2) const{
-        return  s1->getCost() < s2->getCost();
+    bool operator()( State<T>* s1, State<T>* s2) const {
+        return  (s1->getCost() < s2->getCost());
     }
 };
 #endif //PART2_COMPARECOST_H
