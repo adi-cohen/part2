@@ -9,4 +9,4 @@ add_executable(part2 main.cpp ClientHandler.h MyTestClientHandler.h Solver.h Cac
         MySerialServer.h MySerialServer.cpp ClientHandler.h mySocket.cpp
         mySocket.h Problem.h Solution.h StringReverser.h FileCacheManager.h ISearchable.h State.h
         Isearcher.h QueueSearcher.h CompareCost.h  StackSearcher.h PrioritySearcher.h BestFirstSearch.h
-        DFS.h MatrixProblem.h MyClientHandler.h  AStar.h AStar.cpp MatrixSolverBestFS.h BFS.h CompareCost.cpp AStar.cpp AStar.h)
+        DFS.h MatrixProblem.h MyClientHandler.h  AStar.h AStar.cpp MatrixSolverBestFS.h BFS.h CompareCost.cpp AStar.cpp )
