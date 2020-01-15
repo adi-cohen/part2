@@ -96,6 +96,7 @@ public:
             if(s->Equals(currState))
                 return true;
         }
+
         return false;
     }
 
