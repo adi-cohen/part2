@@ -6,6 +6,7 @@
 #define PART2_PRIORITYSEARCHER_H
 
 #include <queue>
+#include <sstream>
 #include "Isearcher.h"
 #include "State.h"
 #include "CompareCost.h"
@@ -65,18 +66,24 @@ public:
             // put in the deque the direction that the state was came from
             State<pair<int,int>>* currentState = s;
             State<pair<int,int>>* prevState = s->getCameFrom();
-            path.push_back(searchable->getDirection(prevState,currentState));
+            string stringg = searchable->getDirection(prevState,currentState);
+            //stringg.append("(");
+            //stringg.append(to_string(currentState->getCost()));
+            //stringg.append(")");
+            path.push_front(stringg);
+            //path.push_front(.append("(").append(currentState->getCost()).append(")"));
+
             //path.push_front(s->getCameFromDir());
             // increment the loop by the following command
             s = s->getCameFrom();
         }
 
         // use an iterator to save the path of the state s
-        auto it = path.end()-1;
+        auto it = path.begin();
         ans += *it;
-        it--;
+        it++;
 
-        for (; it >= path.begin(); it--) {
+        for (; it < path.end(); it++) {
             ans += ",";
             ans += *it;
         }
