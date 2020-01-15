@@ -10,6 +10,7 @@
 #include "Isearcher.h"
 #include "ISearchable.h"
 #include "BestFirstSearch.h"
+#include "MyClientHandler.h"
 //create new namespace boot with function main
 namespace boot {
     class Main {

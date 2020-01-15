@@ -40,7 +40,7 @@ public:
             // we iterate over each successor of node n:
             for (auto it = successors.begin(); it != successors.end(); it++) {
                 // if the state isn't found in the open list and also the closed list we will add it to the open list
-                if ((!isInSet(PrioritySearcher<S, T>::openList,*it)) && (!(isInSet(closed,*it)))) {
+                if ((!isInSet(PrioritySearcher<S, T>::openList, *it)) && (!(isInSet(closed, *it)))) {
                     // we save the state
                     State<T> *s = *it;
                     // update that we came to s from n
@@ -64,9 +64,9 @@ public:
                     double errowToState = s->getCost();
                     double newTrailCost = n->getSumOfCosts() + errowToState;
                     // check if there is a new path
-                    if(newTrailCost < sTrailCost) {
+                    if (newTrailCost < sTrailCost) {
                         // if it is not in the open list
-                        if(!isInSet(PrioritySearcher<S, T>::openList,s)) {
+                        if (!isInSet(PrioritySearcher<S, T>::openList, s)) {
                             this->addToOpenList(s);
                             // o.w - adjust it
                         } else {
@@ -74,6 +74,7 @@ public:
                             s->setSumOfCosts(newTrailCost);
                             PrioritySearcher<S, T>::openList = updatePriorityQueue(PrioritySearcher<S, T>::openList);
 
+                        }
                     }
                 }
             }
