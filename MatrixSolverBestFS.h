@@ -10,13 +10,16 @@
 #include "Isearcher.h"
 #include "BestFirstSearch.h"
 #include "AStar.h"
+#include "DFS.h"
+#include "BFS.h"
 
 //we receive specific problem type and solution type for our solver
 class MatrixSolverBestFS : public Solver<MatrixProblem, string> {
 private:
     //we have specific searcher - BestFirstSearch
-    //ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
-    ISearcher<string, pair<int, int>> *searcher = new AStar<string, pair<int,int>>();
+    //ISearcher<string, pair<int, int>> *searcher = new BFS<string, pair<int,int>>();
+    ISearcher<string, pair<int, int>> *searcher = new DFS<string, pair<int,int>>();
+    //ISearcher<string, pair<int, int>> *searcher = new AStar<string, pair<int,int>>();
     // we have specific searchable - searchableMatrix
     //ISearchable<pair<int, int>>* searchableMatrix;
 public :

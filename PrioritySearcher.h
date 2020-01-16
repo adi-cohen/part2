@@ -76,13 +76,10 @@ public:
             State<pair<int,int>>* currentState = s;
             State<pair<int,int>>* prevState = s->getCameFrom();
             string stringg = searchable->getDirection(prevState,currentState);
-            //stringg.append("(");
-            //stringg.append(to_string(currentState->getCost()));
-            //stringg.append(")");
+            stringg.append("(");
+            stringg.append(to_string(currentState->getSumOfCosts()));
+            stringg.append(")");
             path.push_front(stringg);
-            //path.push_front(.append("(").append(currentState->getCost()).append(")"));
-
-            //path.push_front(s->getCameFromDir());
             // increment the loop by the following command
             s = s->getCameFrom();
         }

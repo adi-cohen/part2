@@ -16,24 +16,24 @@
 template< typename S,typename T>
 class StackSearcher : public ISearcher<S, T> {
 protected:
-    stack<State<T> *> openList; // This stack holds the states/nodes which are waiting to be processed
+    list<State<T> *> visitedList;
+    stack<State<T> *> stateStack; // This stack holds the states/nodes which are waiting to be processed
     int evaluatedNodes; // number of nodes evaluated by the algorithm
     int pathLength; // represents the length of the min path which was found by the algorithm
 
     /* When we will want to insert a state to the open list we will push it to the front of the
     * list to represents pushing an object to a stack
     */
-    void addToOpenList(State<T> *s) {
-        this->openList.push(s);
+    void addToVisitedList(State<T> *s) {
+        this->visitedList.push_front(s);
     }
 
     /* When we will want to extract a state from the open list we will return it and erase him from the list
     * to represents popping an object from a stack
     */
-    State<T> *popOpenList() {
-        evaluatedNodes++;
-        State<T> *state = this->openList.top();
-        this->openList.pop();
+    State<T> *topAndPopStack() {
+        State<T> *state = this->stateStack.top();
+        this->stateStack.pop();
         return state;
     }
 
