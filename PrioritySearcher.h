@@ -11,6 +11,7 @@
 #include "State.h"
 #include "CompareCost.h"
 
+
 using namespace std;
 
 template<class S, class T>
@@ -30,6 +31,8 @@ protected:
         this->openList.insert(s);
     }
 
+
+
     /* When we will want to extract a state from the open list we will erase it from the open list,
      * return it, and the multiset will sort itself accordingly.
      */
@@ -40,6 +43,8 @@ protected:
         openList.erase(it);
         return sa;
     }
+
+
 
 public:
     PrioritySearcher()

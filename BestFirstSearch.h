@@ -73,7 +73,6 @@ public:
                             s->setCameFrom(n);
                             s->setSumOfCosts(newTrailCost);
                             PrioritySearcher<S, T>::openList = updatePriorityQueue(PrioritySearcher<S, T>::openList);
-
                         }
                     }
                 }
