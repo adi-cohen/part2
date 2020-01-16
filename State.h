@@ -85,11 +85,5 @@ public:
         return this->cameFromDir;
     }
 
-    void setPair(State<pair<int, int>>* neighbor, int x, int y) {
-        this->perState = neighbor;
-    }
-
-
-
 };
 #endif //PART2_STATE_H
