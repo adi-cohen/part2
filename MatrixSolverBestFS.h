@@ -18,8 +18,10 @@ class MatrixSolverBestFS : public Solver<MatrixProblem, string> {
 private:
     //we have specific searcher - BestFirstSearch
     //ISearcher<string, pair<int, int>> *searcher = new BFS<string, pair<int,int>>();
-    ISearcher<string, pair<int, int>> *searcher = new DFS<string, pair<int,int>>();
+    //ISearcher<string, pair<int, int>> *searcher = new DFS<string, pair<int,int>>();
     //ISearcher<string, pair<int, int>> *searcher = new AStar<string, pair<int,int>>();
+    ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
+
     // we have specific searchable - searchableMatrix
     //ISearchable<pair<int, int>>* searchableMatrix;
 public :

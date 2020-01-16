@@ -33,7 +33,7 @@ public:
                 // We decrease the last heuristic from the goal state: n
                 //n->setSumOfCosts(n->getSumOfCosts() - getManDist(n, searchable->getGoalState()));
                 // back traces through the parents
-                return PrioritySearcher<S, T>::backTrace(n, searchable);
+                return ISearcher<S, T>::backTrace(n, searchable);
                 // return the total number if nodes that the algorithm passed (int)
                 //return this->evaluatedNodes;
             }
