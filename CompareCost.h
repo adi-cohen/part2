@@ -6,13 +6,13 @@
 #define PART2_COMPARECOST_H
 #include "State.h"
 
- //This class is an object function which is inserted into the multiset and dictates it sorting method,
- //which is sorting the state from the smallest cost state to the largest cost state.
+// in the following class we use object function that checks the sum of costs
+// per each state and compare them
 template <class T>
 struct CompareCost {
 public:
-    bool operator()( State<T>* s1, State<T>* s2) const{
-        return  s1->getCost() < s2->getCost();
+    bool operator()( State<T>* s1, State<T>* s2) const {
+        return  (s1->getSumOfCosts() < s2->getSumOfCosts());
     }
 };
 #endif //PART2_COMPARECOST_H

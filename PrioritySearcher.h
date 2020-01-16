@@ -11,6 +11,7 @@
 #include "State.h"
 #include "CompareCost.h"
 
+
 using namespace std;
 
 template<class S, class T>
@@ -20,8 +21,8 @@ protected:
     * to the largest cost to represent an priority queue
     */
     multiset<State<T> *, CompareCost<T>> openList;
-    int evaluatedNodes = 0;
-    int pathLength = 0;
+    int evaluatedNodes;
+    int pathLength;
 
     /* When we insert a state to the open list we will insert it into the open list
      * and the multiset will sort itself by the CompareCost object function.
@@ -30,8 +31,10 @@ protected:
         this->openList.insert(s);
     }
 
+
+
     /* When we will want to extract a state from the open list we will erase it from the open list,
-     * return it, and the multiset will sort itself accordingly
+     * return it, and the multiset will sort itself accordingly.
      */
     State<T> *popOpenList() {
         evaluatedNodes++;
@@ -41,7 +44,13 @@ protected:
         return sa;
     }
 
+
+
 public:
+    PrioritySearcher()
+    {
+        evaluatedNodes = 0;
+    }
     // will be implemented in the Best First Search
     virtual S search(ISearchable<T> *searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm

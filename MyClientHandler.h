@@ -16,7 +16,7 @@
 #include "BestFirstSearch.h"
 #include "ISearchable.h"
 
-//template<class P, typename S>
+
 class MyClientHandler : public ClientHandler {
 private:
     Solver<MatrixProblem, string> *solver;

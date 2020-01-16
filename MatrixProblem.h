@@ -49,8 +49,9 @@ public:
                 valStr.erase(remove(valStr.begin(), valStr.end(), ' '), valStr.end());
                 //convert from string to int
                 int cost = stoi(valStr);
+                int sumOfCosts = cost;
                 State<pair<int, int>> *currentState;
-                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost);
+                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost, sumOfCosts);
                 //insert the new state to the to the fit col in the line vector
                 lineVector.push_back(currentState);
                 //*currentColIt.operator->(   ) = currentState;
@@ -109,28 +110,28 @@ public:
         int currentCol = currentLocation.second;
         //we check if the state around the current state is in the matrix limits
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
-            State<pair<int, int>> *upFromCurrentState = getStateByRowAndCol(currentRow + 1, currentCol);
+            State<pair<int, int>> *upFromCurrentState = getLocationInSearchable(currentRow + 1, currentCol);
             //if the cost of the state is -1 its mean we cant move to that state
             if (upFromCurrentState->getCost()!= -1) {
                 possibleState.push_back(upFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow - 1, currentCol)) {
-            State<pair<int, int>> *downFromCurrentState = getStateByRowAndCol(currentRow - 1, currentCol);
+            State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
             //if the cost of the state is -1 its mean we cant move to that state
             if (downFromCurrentState->getCost()!= -1) {
                 possibleState.push_back(downFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
-            State<pair<int, int>> *leftFromCurrentState = getStateByRowAndCol(currentRow, currentCol - 1);
+            State<pair<int, int>> *leftFromCurrentState = getLocationInSearchable(currentRow, currentCol - 1);
             //if the cost of the state is -1 its mean we cant move to that state
             if (leftFromCurrentState->getCost()!= -1) {
                 possibleState.push_back(leftFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
-            State<pair<int, int>> *rightFromCurrentState = getStateByRowAndCol(currentRow, currentCol + 1);
+            State<pair<int, int>> *rightFromCurrentState = getLocationInSearchable(currentRow, currentCol + 1);
             //if the cost of the state is -1 its mean we cant move to that state
             if (rightFromCurrentState->getCost()!= -1) {
                 possibleState.push_back(rightFromCurrentState);
@@ -151,10 +152,11 @@ public:
     }
 
     //get the state in specific index in the matrix.
-    State<pair<int, int>> *getStateByRowAndCol(int row, int col) {
+    State<pair<int, int>> *getLocationInSearchable(int row, int col) {
         State<pair<int, int>> *state = (matrix.at(row)).at(col);
         return state;
     }
+
 
     //convert the matrix to string for searching in file name using hash function
     string toString() {
@@ -193,10 +195,10 @@ public:
             return "Up";
         }
         if (currentStateCol > prevStateCol) {
-            return "Right";
+            return "Left";
         }
         if (currentStateCol < prevStateCol) {
-            return "Left";
+            return "Right";
         }
 
     }

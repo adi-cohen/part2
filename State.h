@@ -11,14 +11,18 @@ template <typename T>
 class State {
     T state; // the state represented by a string
     int cost; // cost to reach this state (set by a setter)
+    int sumOfCosts; // sum of costs for the BEST first search algorithm
+    int heuristic;
     State<T>* cameFrom; // the state we came from to this state (setter)
     string cameFromDir; // the direction it came from
+
 public:
     // constructor
-    State<T>(T state, int cost)
+    State<T>(T state, int cost, int sumOfCosts)
     {
         this->state = state;
         this->cost = cost;
+        this->sumOfCosts = cost;
     }
 
 
@@ -45,6 +49,18 @@ public:
         this->cost = cost;
     }
 
+    int getSumOfCosts() {
+        return this->sumOfCosts;
+    }
+
+    void setSumOfCosts(int sumOfCosts1) {
+        this->sumOfCosts = sumOfCosts1;
+    }
+
+    void setHeu(int num) {
+        this->heuristic = num;
+    }
+
     void setCameFrom(State<T>* state)
     {
         this->cameFrom = state;
@@ -69,9 +85,5 @@ public:
         return this->cameFromDir;
     }
 
-    void setState(string direction)
-    {
-        this->cameFromDir = direction;
-    }
 };
 #endif //PART2_STATE_H
