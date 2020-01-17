@@ -109,32 +109,34 @@ public:
         int currentRow = currentLocation.first;
         int currentCol = currentLocation.second;
         //we check if the state around the current state is in the matrix limits
-        if (isInMatrixLimits(currentRow + 1, currentCol)) {
-            State<pair<int, int>> *upFromCurrentState = getLocationInSearchable(currentRow + 1, currentCol);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (upFromCurrentState->getCost()!= -1) {
-                possibleState.push_back(upFromCurrentState);
-            }
-        }
-        if (isInMatrixLimits(currentRow - 1, currentCol)) {
-            State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (downFromCurrentState->getCost()!= -1) {
-                possibleState.push_back(downFromCurrentState);
-            }
-        }
+
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
             State<pair<int, int>> *leftFromCurrentState = getLocationInSearchable(currentRow, currentCol - 1);
             //if the cost of the state is -1 its mean we cant move to that state
             if (leftFromCurrentState->getCost()!= -1) {
-                possibleState.push_back(leftFromCurrentState);
+                possibleState.push_front(leftFromCurrentState);
+            }
+        }
+        if (isInMatrixLimits(currentRow + 1, currentCol)) {
+            State<pair<int, int>> *upFromCurrentState = getLocationInSearchable(currentRow + 1, currentCol);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (upFromCurrentState->getCost()!= -1) {
+                possibleState.push_front(upFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
             State<pair<int, int>> *rightFromCurrentState = getLocationInSearchable(currentRow, currentCol + 1);
             //if the cost of the state is -1 its mean we cant move to that state
             if (rightFromCurrentState->getCost()!= -1) {
-                possibleState.push_back(rightFromCurrentState);
+                possibleState.push_front(rightFromCurrentState);
+            }
+        }
+
+        if (isInMatrixLimits(currentRow - 1, currentCol)) {
+            State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
+            //if the cost of the state is -1 its mean we cant move to that state
+            if (downFromCurrentState->getCost()!= -1) {
+                possibleState.push_front(downFromCurrentState);
             }
         }
         return possibleState;

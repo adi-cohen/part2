@@ -129,7 +129,6 @@ public:
             send(client_socket, solutionChar, solution.size(), 0);
         }
     }
-
 };
 
 #endif //PART2_MYCLIENTHANDLER_H

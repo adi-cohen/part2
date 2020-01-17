@@ -33,7 +33,7 @@ public:
             // if the node n is the goal state
             if (searchable->isGoalState(n)) {
                 // we will do back trace and return the solution
-                return PrioritySearcher<S, T>::backTrace(n, searchable);
+                return ISearcher<S, T>::backTrace(n, searchable);
             }
             // o.w we create a list for all the successors of n
             list<State<T> *> successors = searchable->getAllPossibleStates(n);

@@ -10,58 +10,82 @@
 #include <deque>
 #include "cmath"
 #include "list"
+
 using namespace std;
 
 template<class S, class T>
-class DFS : public StackSearcher<solution, T> {
+class DFS : public StackSearcher<S, T> {
 private:
     list<State<T> *> adjList;
 public:
     S search(ISearchable<T> *searchable) {
         //getting the first vertex to start from
         State<T> *startState = searchable->getInitialState();
-        //we will run DFS by using a stack
-        //we will path state and searchable (our matrix or graph)
-        int totalNumOfNodes = runDFS(startState, searchable);
-        return totalNumOfNodes;
+        //we will run DFS by using a stack,path start state and searchable (our matrix or graph)
+        //       int totalNumOfNodes = runDFS(startState, searchable);
+        //string solution = to_string(totalNumOfNodes);
+//        string solution= this->backTrace(searchable->getGoalState());
+        //       return solution;
+        return runDFS(startState, searchable);
     }
 
-    int runDFS(State<T> *startState, ISearchable<T> *searchable) {
+    S runDFS(State<T> *startState, ISearchable<T> *searchable) {
         // we set the adjacent list of the source vertex
         adjList = searchable->getAllPossibleStates(startState);
-        // Mark all the vertices as not visited
-        bool *visited = new bool[adjList.size()];
-        for (int i = 0; i < adjList.size(); i++) {
-            visited[i] = false;
-        }
+
         // Mark the current node as visited and enqueue it
-        visited[startState] = true;
+        this->addToVisitedList(startState);
         // add the source node to the open list which is a stack data structure
-        addToOpenList(startState);
+        this->stateStack.push(startState);
+        this->evaluatedNodes++;
         // create an iterator to iterate through the adjacency list
         typename std::list<State<T> *>::iterator i;
         // while the stack is not empty
-        while (this->openList.size() > 0) {
-            // Pop a vertex from stack
-            State<T> *u = this->openList.top();
-            this->openList.pop();
+        while (!this->stateStack.empty()) {
+            // Pop a vertex from stack;
+            State<T> *u = this->topAndPopStack();
             // if the popped state was not visited marked it
-            if (!visited[u]) {
+            if (!isInVisitedList(u)) {
                 // increase the number of visited nodes
                 this->evaluatedNodes++;
-                visited[u] = true;
+                //the came from state is the last state in the visited List
+                State<T> *prevState = this->visitedList.front();
+                this->addToVisitedList(u);
+                u->setCameFrom(prevState);
+                //set the new sum of cost
+                int newCost = prevState->getSumOfCosts() + u->getCost();
+                u->setSumOfCosts(newCost);
+                //if we in the goal state
+                if (searchable->isGoalState(u)) {
+                    return ISearcher<S, T>::backTrace(u, searchable);
+                    //todo
+                    //if we want to return the total number if nodes that the algorithm passed
+                    //return to_string(this->evaluatedNodes);
+                }
+
             }
             // Get all adjacent vertices of the popped vertex u
             // If a adjacent has not been visited, then push it
             // to the stack.
-            for (auto i = adjList[u].begin(); i != adjList[u].end(); ++i) {
-                if (!visited[*i]) {
-                    this->openList.push(*i);
+            list<State<T> *> uAdjList = searchable->getAllPossibleStates(u);
+            typename std::list<State<T> *>::iterator UIterator;
+            for (UIterator = uAdjList.begin(); UIterator != uAdjList.end(); ++UIterator) {
+                if (!isInVisitedList(*UIterator)) {
+                    this->stateStack.push(*UIterator);
                 }
             }
         }
-        // return the total number if nodes that the algorithm passed
-        return this->evaluatedNodes;
+    }
+
+    bool isInVisitedList(State<T> *state) {
+        typename std::list<State<T> *>::iterator k;
+        bool isInList = false;
+        for (k = this->visitedList.begin(); k != this->visitedList.end(); ++k) {
+            if (state == *k) {
+                isInList = true;
+            }
+        }
+        return isInList;
     }
 };
 
