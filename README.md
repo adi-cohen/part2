@@ -50,3 +50,8 @@ its runs [python code](https://github.com/adi-cohen/part2/blob/master/auto_clien
 the client sent [this](https://github.com/adi-cohen/part2/blob/master/matrix_test_in.txt) matrix for the server.
 
  *pay attention* - run the program first and then the python code, so the server listen and wait for the client.
+
+## Authors
+
+ yaron sofer & adi cohen
+ BIU
