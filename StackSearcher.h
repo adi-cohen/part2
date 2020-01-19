@@ -56,28 +56,6 @@ public:
         return pathLength;
     }
 
-    // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    //todo S not always be string, and here we return string
-    S backTrace(State<T> *currState, ISearchable<T> *searchable) {
-        deque<string> path;
-        string ans = "";
-        this->pathLength = currState->getCost();
-        State<T> *initState = searchable->getInitialState();
-        while (!(currState->Equals(initState))) {
-            path.push_front(currState->getCameFromDir());
-            currState = currState->getCameFrom();
-        }
-
-        auto it = path.begin();
-        ans += *it;
-        it++;
-
-        for (; it != path.end(); it++) {
-            ans += ",";
-            ans += *it;
-        }
-        return ans;
-    }
 };
 
 #endif //PART2_STACKSEARCHER_H

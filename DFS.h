@@ -58,7 +58,6 @@ public:
                 //if we in the goal state
                 if (searchable->isGoalState(u)) {
                     return ISearcher<S, T>::backTrace(u, searchable);
-                    //todo
                     //if we want to return the total number if nodes that the algorithm passed
                     //return to_string(this->evaluatedNodes);
                 }
