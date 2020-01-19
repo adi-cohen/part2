@@ -21,3 +21,6 @@ to solve this problem, we used 4 algorethms.
 * **Depth-first search** -  an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node  and explores as far as possible along each branch before backtracking. [read more](https://en.wikipedia.org/wiki/Depth-first_search)
 
 * **A-sart** - an informed search algorithm, starting from a specific starting node of a graph, it aims to find a path to the given goal node having the smallest cost . It does this by maintaining a tree of paths originating at the start node and extending those paths one edge at a time until its termination criterion is satisfied. [read more](https://en.wikipedia.org/wiki/A*_search_algorithm)
+
+at the end we chose the best algorithm 
+![the table](https://github.com/adi-cohen/part2/blob/master/table.png)
