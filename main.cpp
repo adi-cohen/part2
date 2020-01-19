@@ -18,7 +18,7 @@ namespace boot {
     public:
         int main(int port) {
             //create serial server as server
-            //server_side::Server *serialServer = new mySerialServer();
+            //server_side::Server *serialServer = new MySerialServer();
             server_side::Server *parallelServer = new myParallelServer();
 
             //create file cache as cache manager
@@ -28,12 +28,15 @@ namespace boot {
             ClientHandler *clientHandler = new MyClientHandler(fileCache);
             parallelServer->open(port, clientHandler);
             //serialServer->open(port, clientHandler);
+            return 0;
         }
     };
 }
 
 int main(int argc, char *argv[]) {
-    int port = atoi(argv[0]);
+    (void)argc;
+    (void)argv;
+    int port = atoi(argv[1]);
     boot::Main main;
-    main.main(5600);
-};
+    main.main(port);
+}

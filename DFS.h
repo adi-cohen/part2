@@ -21,7 +21,7 @@ public:
     S search(ISearchable<T> *searchable) {
         //getting the first vertex to start from
         State<T> *startState = searchable->getInitialState();
-        //we will run DFS by using a stack,path start state and searchable (our matrix or graph)
+        //we will run DFS by using a stack,path start theState and searchable (our matrix or graph)
         //       int totalNumOfNodes = runDFS(startState, searchable);
         //string solution = to_string(totalNumOfNodes);
 //        string solution= this->backTrace(searchable->getGoalState());
@@ -44,18 +44,18 @@ public:
         while (!this->stateStack.empty()) {
             // Pop a vertex from stack;
             State<T> *u = this->topAndPopStack();
-            // if the popped state was not visited marked it
+            // if the popped theState was not visited marked it
             if (!isInVisitedList(u)) {
                 // increase the number of visited nodes
                 this->evaluatedNodes++;
-                //the came from state is the last state in the visited List
+                //the came from theState is the last theState in the visited List
                 State<T> *prevState = this->visitedList.front();
                 this->addToVisitedList(u);
                 u->setCameFrom(prevState);
-                //set the new sum of cost
+                //set the new sum of stateCost
                 int newCost = prevState->getSumOfCosts() + u->getCost();
                 u->setSumOfCosts(newCost);
-                //if we in the goal state
+                //if we in the goal theState
                 if (searchable->isGoalState(u)) {
                     return ISearcher<S, T>::backTrace(u, searchable);
                     //if we want to return the total number if nodes that the algorithm passed

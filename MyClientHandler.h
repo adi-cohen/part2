@@ -30,7 +30,7 @@ public:
 
     //the client will send the matrix row by row
     //we will read the matrix as strings and insert it to matrixProblem
-    //after the matrix we will gate the initial state and goal state
+    //after the matrix we will gate the initial theState and goal theState
     //at the end the client will sent the word "end"
     virtual ClientHandler* getClone(){
         return new MyClientHandler(cacheManager);
@@ -138,5 +138,8 @@ public:
         }
     }
 };
+
+
+
 
 #endif //PART2_MYCLIENTHANDLER_H

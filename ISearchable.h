@@ -11,16 +11,16 @@
 template <class T>
 class ISearchable {
 public:
-    virtual State<T>* getInitialState() = 0; // Get the state you want to search a path from
-    virtual State<T>* getGoalState() = 0; // returns the state you want to search a path to
+    virtual ~ISearchable() = default;
+    virtual State<T>* getInitialState() = 0; // Get the theState you want to search a path from
+    virtual State<T>* getGoalState() = 0; // returns the theState you want to search a path to
     virtual list<State<T>*> getAllPossibleStates(State<T>* s) = 0; // returns all the possible states you can get
     virtual State<T>* getLocationInSearchable(int row, int col) = 0;
-    // from an input state
+    // from an input theState
     virtual int getProblemSize() = 0; // returns the size of the problem
-    virtual bool isGoalState(State<T>* curState) = 0; // checks if a state is the goal state (for a case we have
+    virtual bool isGoalState(State<T>* curState) = 0; // checks if a theState is the goal theState (for a case we have
     virtual string toString()=0;
     virtual string getDirection(State<pair<int, int>> *currentState, State<pair<int, int>> *previousState)=0;
-    // more than one goal state
-    virtual ~ISearchable() {}
+    // more than one goal theState
 };
 #endif //PART2_ISEARCHABLE_H

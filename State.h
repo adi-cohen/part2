@@ -9,20 +9,19 @@ using namespace std;
 
 template <typename T>
 class State {
-    T state; // the state represented by a string
-    int cost; // cost to reach this state (set by a setter)
+    T theState;
+    int stateCost; // stateCost to reach this theState (set by a setter)
     int sumOfCosts; // sum of costs for the BEST first search algorithm
-    int heuristic;
-    State<T>* cameFrom; // the state we came from to this state (setter)
+    State<T>* cameFrom; // the theState we came from to this theState (setter)
     string cameFromDir; // the direction it came from
 
 public:
     // constructor
-    State<T>(T state, int cost, int sumOfCosts)
+    State<T>(T state1, int cost1)
     {
-        this->state = state;
-        this->cost = cost;
-        this->sumOfCosts = cost;
+        this->theState = state1;
+        this->stateCost = cost1;
+        this->sumOfCosts = cost1;
     }
 
 
@@ -33,7 +32,7 @@ public:
     // we override Object's Equals method
     bool Equals(State<T>* other)
     {
-        if (this->state == other->state)
+        if (this->theState == other->theState)
             return true;
         else
             return false;
@@ -41,12 +40,12 @@ public:
 
     int getCost()
     {
-        return this->cost;
+        return this->stateCost;
     }
 
     void setCost(int cost)
     {
-        this->cost = cost;
+        this->stateCost = cost;
     }
 
     int getSumOfCosts() {
@@ -77,7 +76,7 @@ public:
 
     T getState()
     {
-        return this->state;
+        return this->theState;
     }
 
     string getCameFromDir()

@@ -22,18 +22,18 @@ protected:
     int pathLength; // represents the length of the min path which was found by the algorithm
     list<State<T> *> visitedList;
 
-    /* When we will want to insert a state to the open list we will push it to the back of the
+    /* When we will want to insert a theState to the open list we will push it to the back of the
      * list to represents pushing an object to a queue
     */
     void addToQueue(State<T> *s) {
         this->stateQueue.push(s);
     }
 
-    /* When we will want to extract a state from the open list we will return it and erase him from the list
+    /* When we will want to extract a theState from the open list we will return it and erase him from the list
      * to represents popping an object from a queue
      */
     State<T> *topAndPopFromQueue() {
-        // get the state/node from the open list
+        // get the theState/node from the open list
         State<T> *s = stateQueue.front();
         //State<T> *s = *(stateQueue.front());
         //pathLength += s->getCost();

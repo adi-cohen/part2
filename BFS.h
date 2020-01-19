@@ -49,7 +49,7 @@ public:
                     // set where it came from
                     State<T> *neighbor = *UIterator;
                     neighbor->setCameFrom(u);
-                    //set the sum of cost
+                    //set the sum of stateCost
                     neighbor->setSumOfCosts(u->getSumOfCosts()+neighbor->getCost());
                     if (searchable->isGoalState(*UIterator)){
                         this->evaluatedNodes++;

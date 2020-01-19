@@ -20,14 +20,14 @@ protected:
     int evaluatedNodes; // number of nodes evaluated by the algorithm
     int pathLength; // represents the length of the min path which was found by the algorithm
 
-    /* When we will want to insert a state to the open list we will push it to the front of the
+    /* When we will want to insert a theState to the open list we will push it to the front of the
     * list to represents pushing an object to a stack
     */
     void addToVisitedList(State<T> *s) {
         this->visitedList.push_front(s);
     }
 
-    /* When we will want to extract a state from the open list we will return it and erase him from the list
+    /* When we will want to extract a theState from the open list we will return it and erase him from the list
     * to represents popping an object from a stack
     */
     State<T> *topAndPopStack() {

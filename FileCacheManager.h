@@ -32,8 +32,8 @@ public:
 
     S get(string problem) override {
         //if not in cache
+        string sol = "error";
         if (cacheMap.find(problem) == cacheMap.end()) {
-        //if (true) {
             fstream myFile;
             string fileName = problem.append(".txt");
             string file_name = problem;
@@ -58,6 +58,7 @@ public:
             insertExistObjToList(problem, solution);
             return solution;
         }
+        return sol;
     }
 
     //our problem is hashed string

@@ -17,6 +17,8 @@ public:
     virtual bool find(string problem) =0;
     virtual S get(string problem) = 0;
     virtual void save(string problem, S solution)=0;
+    virtual  ~CacheManager() = default;
+
 };
 
 

@@ -49,12 +49,10 @@ void activateParallelClientHandler(bool *stop, int *sock, void *cli, socklen_t *
     ::close(sock1);
 }
 
-int myParallelServer::open(int port, ClientHandler *handler) {
-    int sockfd, newsockfd;
+void myParallelServer::open(int port, ClientHandler *handler) {
+    int sockfd;
     socklen_t clilen;
-    char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
-    int n;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         std::cout << ("ERROR opening socket") << std::endl;

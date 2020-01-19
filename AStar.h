@@ -25,12 +25,12 @@ public:
         multiset<State<T> *, CompareCost<T>> closed;
         // while the open queue isn't empty
         while (PrioritySearcher<S, T>::openList.size() > 0) {
-            // inherited from PrioritySearcher, removes the least state n
+            // inherited from PrioritySearcher, removes the least theState n
             State<T> *n = PrioritySearcher<S, T>::popOpenList();
             closed.insert(n); // We insert it into the close list so it won't be processed again
-            // If we have reached the goal state we will trace back the path we have found and return it
+            // If we have reached the goal theState we will trace back the path we have found and return it
             if (searchable->isGoalState(n)) {
-                // We decrease the last heuristic from the goal state: n
+                // We decrease the last heuristic from the goal theState: n
                 //n->setSumOfCosts(n->getSumOfCosts() - getManDist(n, searchable->getGoalState()));
                 // back traces through the parents
                 return ISearcher<S, T>::backTrace(n, searchable);
@@ -39,11 +39,11 @@ public:
             }
             // calling the delegated method, returns a list of states with n as a parent
             list<State<T> *> successors = searchable->getAllPossibleStates(n);
-            // We iterate through all the successors state
+            // We iterate through all the successors theState
             for (auto it = successors.begin(); it != successors.end(); it++) {
                 State<T> *neighbor = *it;
                 double possibleTrail = n->getSumOfCosts() + neighbor->getCost();
-                // if the state isn't found in the open list and also the not in the closed list
+                // if the theState isn't found in the open list and also the not in the closed list
                 if ((!isInSet(PrioritySearcher<S, T>::openList, neighbor)) && (!(isInSet(closed, neighbor)))) {
                     notInOpenClose(neighbor, n, possibleTrail, searchable);
                     continue;
@@ -90,11 +90,11 @@ public:
         direction = searchable->getLocationInSearchable(go->getState().first, go->getState().second);
         int xGO = direction->getState().first;
         int yGO = direction->getState().second;
-        // call setHeu in state class to set the heuristic distance of the neighbor state
+        // call setHeu in theState class to set the heuristic distance of the neighbor theState
         neighbor->setHeu(abs(xGO - xNE) + abs(yGO - yNE));
     }
 
-    // THE HEURISTIC METHOD - This method calculates the Manhattan distance of a state from the goal state and returns it
+    // THE HEURISTIC METHOD - This method calculates the Manhattan distance of a theState from the goal theState and returns it
     int getManDist(State<pair<int, int>>* currState, State<pair<int, int>>* goalState) {
         int x = goalState->getState().first - currState->getState().first;
         int y = goalState->getState().second - currState->getState().second;
@@ -113,8 +113,8 @@ public:
         return newQueue;
     }
 
-    // This method checks if a state is found in the open list, and if it's cost is smaller then the state inside
-    // the open list we will replace it's cost with the new cost
+    // This method checks if a theState is found in the open list, and if it's stateCost is smaller then the theState inside
+    // the open list we will replace it's stateCost with the new stateCost
     virtual void saveMin(State<T>* currState, State<T>* n)
     {
         for (auto it = PrioritySearcher<S,T>::openList.begin(); it != PrioritySearcher<S,T>::openList.end(); it++)
@@ -124,7 +124,7 @@ public:
             if (s->Equals(currState)) {
                 // check the costs - if the condition is true
                 if(currState->getSumOfCosts() + s->getCost() < s->getSumOfCosts()) {
-                    // set the father of the current state
+                    // set the father of the current theState
                     currState->setCameFrom(s->getCameFrom());
                     // adjust the open list
                     PrioritySearcher<S, T>::openList.erase(it);
@@ -133,14 +133,14 @@ public:
                 //return;
             }
         }
-        // set the father of the current state
+        // set the father of the current theState
         currState->setCameFrom(n);
         // if it's not in the open list add it to open list
         this->addToOpenList(currState);
         return;
     }
 
-    // This method checks if a state is inside a multiset
+    // This method checks if a theState is inside a multiset
     bool isInSet(multiset<State<T>*,CompareCost<T>> setOfState,State<T>* currState)
     {
         for (auto it = setOfState.begin(); it != setOfState.end(); it++)

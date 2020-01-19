@@ -17,6 +17,7 @@ public:
    // virtual string solve(string problem) = 0;
     virtual S solve(P) = 0;
    virtual Solver* getClone() = 0;
+   virtual ~Solver() = default;
 };
 
 #endif //PART2_SOLVER_H
