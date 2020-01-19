@@ -25,3 +25,15 @@ to solve this problem, we used 4 algorethms.
 we preformes an experiment and choose the most effective algorithem.
 below the result of the experiment:
 ![the table](https://github.com/adi-cohen/part2/blob/master/table.png)
+
+### Design Patterns in C++
+
+in this program we used some design patters, for exemple:
+
+* Single responsibility principle - A class should only have one responsibility.
+
+* Open/closed principle -The systems we build should be open for extension, but closed for modification. 
+
+* bridge -  A mechanism that decouples an interface (interface hierarchy) from an implementation (implementation hierarchy).
+
+* etc.
