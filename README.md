@@ -8,6 +8,9 @@ the program is generically written so it can accept and solve varios problem
 
 in our code the problem is finding shortest path in matrix, and return the path with the cost of the nodes in the shortest path.
 
+to solve this problem, we used 4 algorethms.
+
+
 ### ALGORITHMS
 
 * **Best first search** - a search algorithm which explores a graph by expanding the most promising node chosen according to a specified rule. 
