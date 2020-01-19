@@ -6,7 +6,6 @@
 #define PART2_STACKSEARCHER_H
 
 #include "Isearcher.h"
-#include "Solution.h"
 #include "stack"
 
 /*

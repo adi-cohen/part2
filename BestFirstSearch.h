@@ -17,6 +17,9 @@ using namespace std;
 template<class S, class T>
 class BestFirstSearch : public PrioritySearcher<S, T> {
 public:
+
+
+
     /*
      * This method gets a searchable problem runs the Best First Search algorithm and returns
      * the minimal path it found
@@ -81,7 +84,7 @@ public:
     }
 
     multiset<State<T> *, CompareCost<T>> updatePriorityQueue(multiset<State<T> *, CompareCost<T>> enteredQueue) {
-        multiset<State<T> *, CompareCost<T>> newQueue;
+        multiset<State<T> *, CompareCost<T>> newQueue;// = new multiset<State<T> *, CompareCost<T>>();
         while(enteredQueue.size() > 0) {
             auto it = enteredQueue.end();
             State<T> *sa = *it;

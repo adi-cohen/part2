@@ -32,7 +32,6 @@ protected:
     }
 
 
-
     /* When we will want to extract a state from the open list we will erase it from the open list,
      * return it, and the multiset will sort itself accordingly.
      */
@@ -45,12 +44,13 @@ protected:
     }
 
 
-
 public:
-    PrioritySearcher()
-    {
+
+
+    PrioritySearcher() {
         evaluatedNodes = 0;
     }
+
     // will be implemented in the Best First Search
     virtual S search(ISearchable<T> *searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm

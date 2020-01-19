@@ -18,14 +18,15 @@ namespace boot {
     public:
         int main(int port) {
             //create serial server as server
-            server_side::Server *serialServer = new mySerialServer();
+            //server_side::Server *serialServer = new mySerialServer();
+            server_side::Server *parallelServer = new myParallelServer();
 
             //create file cache as cache manager
             CacheManager<string> *fileCache = new FileCacheManager<string>();
 
             //create testClientHandler with string reverser and file cache
             ClientHandler *clientHandler = new MyClientHandler(fileCache);
-            parallelServer->open(port,clientHandler);
+            parallelServer->open(port, clientHandler);
             //serialServer->open(port, clientHandler);
         }
     };
