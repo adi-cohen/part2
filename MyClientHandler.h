@@ -103,8 +103,6 @@ public:
         }
         //after we read all the data from the file
         //creating the matrixProblem
-        //we are decrease one from number of row and column because we add one in the last iteration,
-        //but we didnt really add one more line and column
         MatrixProblem *matrix = new MatrixProblem(matrixStringVector, startLocation, goalLocation, matrixRow,
                                                   matrixCol);
         //create string that represent the problem with hash function

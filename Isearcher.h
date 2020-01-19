@@ -25,12 +25,14 @@ public:
     string backTrace(State<T> *s, ISearchable<T> *searchable) {
         deque<string> path;
         string ans = "";
+        //int numberOfStates =0;
         // pathLength holds to cost to reach to that state
         this->pathLength = s->getCost();
         State<T> *initState = searchable->getInitialState();
         // while the state isn't the source state
         while (!(s->Equals(initState))) {
             // put in the deque the direction that the state was came from
+            //numberOfStates+=1;
             State<pair<int,int>>* currentState = s;
             State<pair<int,int>>* prevState = s->getCameFrom();
             string stringg = searchable->getDirection(prevState,currentState);

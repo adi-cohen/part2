@@ -11,6 +11,7 @@
 #include "ISearchable.h"
 #include "BestFirstSearch.h"
 #include "MyClientHandler.h"
+#include "myParallelServer.h"
 //create new namespace boot with function main
 namespace boot {
     class Main {
@@ -24,7 +25,8 @@ namespace boot {
 
             //create testClientHandler with string reverser and file cache
             ClientHandler *clientHandler = new MyClientHandler(fileCache);
-            serialServer->open(port, clientHandler);
+            parallelServer->open(port,clientHandler);
+            //serialServer->open(port, clientHandler);
         }
     };
 }
