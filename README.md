@@ -1,8 +1,9 @@
-# MATRIX SHORT PATH SOLVER
+# Searching Algorithms Server
+In this program we created a generic server, which can be used for several projects.
 
-this program solve problem that accepted from client, and return the solution to the client.
+the server solve problem that accepted from client, and return the solution to the client.
 
-the program is generically written so it can accept and solve varios problem
+the program is generically written so it can accept and solve varios problem.
 
 ## our problem - finding shortes path in matrix
 
@@ -37,3 +38,12 @@ in this program we used some design patters, for exemple:
 * bridge -  A mechanism that decouples an interface (interface hierarchy) from an implementation (implementation hierarchy).
 
 * etc.
+
+### Test the program
+
+you can test the program by runnig the following command,
+
+
+```
+python3 auto_client.py -vv
+```
