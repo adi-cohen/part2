@@ -4,16 +4,22 @@
 
 #ifndef PART2_ASTAR_H
 #define PART2_ASTAR_H
-#include "PrioritySearcher.h"
 
+#include "PrioritySearcher.h"
 
 
 // This class implements the PrioritySearcher abstract class as a A* algorithm
 template<class S, class T>
 class AStar : public PrioritySearcher<S, T> {
+    string algoName = "AStar";
+
 public:
+    string getName() override {
+        return this->algoName;
+    }
+
     // This method gets a searchable problem runs the A* algorithm and returns the minimal path it found
-   S search(ISearchable<T> *searchable) {
+    S search(ISearchable<T> *searchable) {
         // getting the source vertex
         State<T> *initState = searchable->getInitialState();
         // we set the vertex s: s.f = s.g + s.h to zero
@@ -48,43 +54,46 @@ public:
                     notInOpenClose(neighbor, n, possibleTrail, searchable);
                     continue;
                 }
-                // in a case we can improve our path
-                else if(possibleTrail < neighbor->getSumOfCosts()){
-                   improvePath(neighbor, n, possibleTrail, searchable);
-                   continue;
+                    // in a case we can improve our path
+                else if (possibleTrail < neighbor->getSumOfCosts()) {
+                    improvePath(neighbor, n, possibleTrail, searchable);
+                    continue;
                 }
             }
         }
+        cout << "cant find path"<<endl;
+        return "cant find path";
     }
 
-    void improvePath(State<T>* neighbor, State<T>* currentState, double possibleTrail, ISearchable<T> *searchable) {
-       State<T>* goalState = searchable->getGoalState();
-       neighbor->setCameFrom(currentState);
-       neighbor->setSumOfCosts(possibleTrail);
-       setHeuristic(neighbor, goalState, searchable);
-       PrioritySearcher<S, T>::openList = updatePriorityQueue(PrioritySearcher<S, T>::openList);
+    void improvePath(State<T> *neighbor, State<T> *currentState, double possibleTrail, ISearchable<T> *searchable) {
+        State<T> *goalState = searchable->getGoalState();
+        neighbor->setCameFrom(currentState);
+        neighbor->setSumOfCosts(possibleTrail);
+        setHeuristic(neighbor, goalState, searchable);
+        PrioritySearcher<S, T>::openList = updatePriorityQueue(PrioritySearcher<S, T>::openList);
     }
 
     void enterToOpen(State<T> *pState) {
-        State<pair<int, int>>* pst = pState;
+        State<pair<int, int>> *pst = pState;
         this->addToOpenList(pst);
     }
 
-    void  notInOpenClose(State<T> * neighbor, State<T> * currentState, double possibleTrail,
-                         ISearchable<T> *searchable) {
-        State<pair<int, int>>* neighbor1 = neighbor;
-        State<pair<int, int>>* currentState1 = currentState;
-        State<T>* goalState = searchable->getGoalState();
+    void notInOpenClose(State<T> *neighbor, State<T> *currentState, double possibleTrail,
+                        ISearchable<T> *searchable) {
+        State<pair<int, int>> *neighbor1 = neighbor;
+        State<pair<int, int>> *currentState1 = currentState;
+        State<T> *goalState = searchable->getGoalState();
         neighbor1->setCameFrom(currentState1);
         neighbor1->setSumOfCosts(possibleTrail);
         setHeuristic(neighbor, goalState, searchable);
         enterToOpen(neighbor1);
     }
 
-    void setHeuristic(State<T> * neighbor, State<T> * goal, ISearchable<T> *searchable) {
-        State<pair<int, int>>* ne = neighbor;
-        State<pair<int, int>>* go = goal;
-        State<pair<int, int>>* direction = searchable->getLocationInSearchable(ne->getState().first, ne->getState().second);
+    void setHeuristic(State<T> *neighbor, State<T> *goal, ISearchable<T> *searchable) {
+        State<pair<int, int>> *ne = neighbor;
+        State<pair<int, int>> *go = goal;
+        State<pair<int, int>> *direction = searchable->getLocationInSearchable(ne->getState().first,
+                                                                               ne->getState().second);
         int xNE = direction->getState().first;
         int yNE = direction->getState().second;
         direction = searchable->getLocationInSearchable(go->getState().first, go->getState().second);
@@ -95,7 +104,7 @@ public:
     }
 
     // THE HEURISTIC METHOD - This method calculates the Manhattan distance of a theState from the goal theState and returns it
-    int getManDist(State<pair<int, int>>* currState, State<pair<int, int>>* goalState) {
+    int getManDist(State<pair<int, int>> *currState, State<pair<int, int>> *goalState) {
         int x = goalState->getState().first - currState->getState().first;
         int y = goalState->getState().second - currState->getState().second;
         return abs(x) + abs(y);
@@ -104,7 +113,7 @@ public:
 
     multiset<State<T> *, CompareCost<T>> updatePriorityQueue(multiset<State<T> *, CompareCost<T>> enteredQueue) {
         multiset<State<T> *, CompareCost<T>> newQueue;
-        while(enteredQueue.size() > 0) {
+        while (enteredQueue.size() > 0) {
             auto it = enteredQueue.end();
             State<T> *sa = *it;
             newQueue.insert(sa); // newqueue.push(entered.top());
@@ -115,15 +124,13 @@ public:
 
     // This method checks if a theState is found in the open list, and if it's stateCost is smaller then the theState inside
     // the open list we will replace it's stateCost with the new stateCost
-    virtual void saveMin(State<T>* currState, State<T>* n)
-    {
-        for (auto it = PrioritySearcher<S,T>::openList.begin(); it != PrioritySearcher<S,T>::openList.end(); it++)
-        {
+    virtual void saveMin(State<T> *currState, State<T> *n) {
+        for (auto it = PrioritySearcher<S, T>::openList.begin(); it != PrioritySearcher<S, T>::openList.end(); it++) {
             State<T> *s = *it;
             // means it is in the open list
             if (s->Equals(currState)) {
                 // check the costs - if the condition is true
-                if(currState->getSumOfCosts() + s->getCost() < s->getSumOfCosts()) {
+                if (currState->getSumOfCosts() + s->getCost() < s->getSumOfCosts()) {
                     // set the father of the current theState
                     currState->setCameFrom(s->getCameFrom());
                     // adjust the open list
@@ -141,16 +148,15 @@ public:
     }
 
     // This method checks if a theState is inside a multiset
-    bool isInSet(multiset<State<T>*,CompareCost<T>> setOfState,State<T>* currState)
-    {
-        for (auto it = setOfState.begin(); it != setOfState.end(); it++)
-        {
-            State<T>* s = *it;
-            if(s->Equals(currState))
+    bool isInSet(multiset<State<T> *, CompareCost<T>> setOfState, State<T> *currState) {
+        for (auto it = setOfState.begin(); it != setOfState.end(); it++) {
+            State<T> *s = *it;
+            if (s->Equals(currState))
                 return true;
         }
         return false;
     }
 
 };
+
 #endif //PART2_ASTAR_H

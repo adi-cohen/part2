@@ -121,9 +121,11 @@ public:
 
         //OA - MatrixSolverBestFS
         this->solver = new MatrixSolverBestFS();
+        string name = this->solver->getSolverName();
+        string problemName = matrixStringHash.append(name);
         //if we already solve this problem
-        if (this->cacheManager->find(matrixStringHash)) {
-            string solution1 = this->cacheManager->get(matrixStringHash);
+        if (this->cacheManager->find(problemName)) {
+            string solution1 = this->cacheManager->get(problemName);
             const char *solutionChar1 = solution1.c_str();
             send(client_socket, solutionChar1, solution1.size(), 0);
 
@@ -132,7 +134,7 @@ public:
             //we will sent to solver the problem as matrix
             string solution = this->solver->solve(*matrix);
             //we will save the problem as matrix string and the solution as matrix string
-            this->cacheManager->save(matrixStringHash, solution);
+            this->cacheManager->save(problemName, solution);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         }

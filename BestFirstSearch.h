@@ -16,10 +16,13 @@ using namespace std;
 // as a Best First Search algorithm as we saw in the lecture
 template<class S, class T>
 class BestFirstSearch : public PrioritySearcher<S, T> {
+    string algoName = "BestFs";
+
 public:
 
-
-
+    string getName() override {
+        return this->algoName;
+    }
     /*
      * This method gets a searchable problem runs the Best First Search algorithm and returns
      * the minimal path it found

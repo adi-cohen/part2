@@ -14,6 +14,8 @@ class State {
     int sumOfCosts; // sum of costs for the BEST first search algorithm
     State<T>* cameFrom; // the theState we came from to this theState (setter)
     string cameFromDir; // the direction it came from
+    int heuristic;
+
 
 public:
     // constructor

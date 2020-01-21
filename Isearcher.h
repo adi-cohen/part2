@@ -18,6 +18,7 @@ private:
 
 
 public:
+    virtual string getName() =0;
     virtual ~ISearcher() = default;
     virtual S search (ISearchable<T>* searchable) = 0; // the search method - dependency injection
     virtual int getNumberOfNodesEvaluated() = 0; // get how many nodes were evaluated by the algorithm

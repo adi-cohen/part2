@@ -34,6 +34,10 @@ public :
         return new MatrixSolverBestFS();
     }
 
+    string getSolverName (){
+    return this->searcher->getName();
+}
+
 
 };
 

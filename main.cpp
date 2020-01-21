@@ -36,7 +36,15 @@ namespace boot {
 int main(int argc, char *argv[]) {
     (void)argc;
     (void)argv;
-    int port = atoi(argv[1]);
+    int port;
+    //if we get port from the user
+    if (argv[1] != NULL) {
+         port = atoi(argv[1]);
+    }
+    //the defult port is 5600
+    else {
+         port = 5600;
+    }
     boot::Main main;
     main.main(port);
 }

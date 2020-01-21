@@ -17,7 +17,12 @@ template<class S, class T>
 class DFS : public StackSearcher<S, T> {
 private:
     list<State<T> *> adjList;
+    string algoName = "DFS";
+
 public:
+    string getName() override {
+        return this->algoName;
+    }
     S search(ISearchable<T> *searchable) {
         //getting the first vertex to start from
         State<T> *startState = searchable->getInitialState();
@@ -74,6 +79,8 @@ public:
                 }
             }
         }
+        cout <<"cant find path" <<endl;
+        return "cant find path";
     }
 
     bool isInVisitedList(State<T> *state) {
