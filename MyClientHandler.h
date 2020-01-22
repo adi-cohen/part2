@@ -123,6 +123,7 @@ public:
         this->solver = new MatrixSolverBestFS();
         string name = this->solver->getSolverName();
         string problemName = matrixStringHash.append(name);
+
         //if we already solve this problem
         if (this->cacheManager->find(problemName)) {
             string solution1 = this->cacheManager->get(problemName);

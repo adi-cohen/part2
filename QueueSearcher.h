@@ -33,6 +33,7 @@ protected:
      * to represents popping an object from a queue
      */
     State<T> *topAndPopFromQueue() {
+        evaluatedNodes++;
         // get the theState/node from the open list
         State<T> *s = stateQueue.front();
         //State<T> *s = *(stateQueue.front());
@@ -51,7 +52,7 @@ public:
     virtual S search(ISearchable<T> *searchable) = 0;
 
     // get how many nodes were evaluated by the algorithm
-    int getNumberOfNodesEvaluated() {
+    int getNumberOfNodesEvaluated() override {
         return evaluatedNodes;
     }
 

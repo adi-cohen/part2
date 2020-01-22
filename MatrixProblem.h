@@ -116,6 +116,15 @@ public:
                 possibleState.push_front(leftFromCurrentState);
             }
         }
+
+
+        if (isInMatrixLimits(currentRow - 1, currentCol)) {
+            State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
+            //if the stateCost of the theState is -1 its mean we cant move to that theState
+            if (downFromCurrentState->getCost() != -1) {
+                possibleState.push_front(downFromCurrentState);
+            }
+        }
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
             State<pair<int, int>> *upFromCurrentState = getLocationInSearchable(currentRow + 1, currentCol);
             //if the stateCost of the theState is -1 its mean we cant move to that theState
@@ -128,14 +137,6 @@ public:
             //if the stateCost of the theState is -1 its mean we cant move to that theState
             if (rightFromCurrentState->getCost() != -1) {
                 possibleState.push_front(rightFromCurrentState);
-            }
-        }
-
-        if (isInMatrixLimits(currentRow - 1, currentCol)) {
-            State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
-            //if the stateCost of the theState is -1 its mean we cant move to that theState
-            if (downFromCurrentState->getCost() != -1) {
-                possibleState.push_front(downFromCurrentState);
             }
         }
         return possibleState;
@@ -171,6 +172,10 @@ public:
             }
             matrixString.append("\n");
         }
+        // we add to the hash that represent the problem the start and goal state.
+        matrixString.append(to_string(this->startLocation.first) + "," + to_string(this->startLocation.second) + "\n");
+        matrixString.append(to_string(this->endLocation.first) + "," + to_string(this->endLocation.second) + "\n");
+
         //make hash on the string that represent the matrix
         size_t hashProblem = hash<string>{}(matrixString);
         //convert the hash to string
