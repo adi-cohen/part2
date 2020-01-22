@@ -22,15 +22,15 @@ private:
     vector<vector<State<pair<int, int>> *>> matrix; // represents the matrix as vector of vector of states
     int numOfRow;
     int numOfCol;
-    State<pair<int, int>> *initState; // the source/enter state the first int is the row and second the column
-    State<pair<int, int>> *goalState; // the goal/exit state the first int is the row and second the column
+    State<pair<int, int>> *initState; // the source/enter theState the first int is the row and second the column
+    State<pair<int, int>> *goalState; // the goal/exit theState the first int is the row and second the column
     pair<int, int> startLocation;
     pair<int, int> endLocation;
 
 public:
     //we will get vector of string
     //each string in the vector represent row in the matrix
-    vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row, int col) {
+    vector<vector<State<pair<int, int>> *>> buildMatrix(vector<string> matrixString, int row) {
         vector<vector<State<pair<int, int>> *>> matrixVector;
         int currentRow;
         //for every row we got from the client
@@ -49,10 +49,9 @@ public:
                 valStr.erase(remove(valStr.begin(), valStr.end(), ' '), valStr.end());
                 //convert from string to int
                 int cost = stoi(valStr);
-                int sumOfCosts = cost;
                 State<pair<int, int>> *currentState;
-                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost, sumOfCosts);
-                //insert the new state to the to the fit col in the line vector
+                currentState = new State<pair<int, int>>(pair<int, int>(currentRow, currentCol), cost);
+                //insert the new theState to the to the fit col in the line vector
                 lineVector.push_back(currentState);
                 //*currentColIt.operator->(   ) = currentState;
                 //++currentColIt;
@@ -70,7 +69,7 @@ public:
 
         this->numOfCol = matrixCol;
         this->numOfRow = matrixRow;
-        this->matrix = buildMatrix(matrixInString, numOfRow, numOfCol);
+        this->matrix = buildMatrix(matrixInString, numOfRow);
         this->startLocation = startLoc;
         this->endLocation = goalLoc;
         this->initState = (this->matrix.at(startLocation.first)).at(startLocation.second);
@@ -88,12 +87,12 @@ public:
         return matrixSize;
     }
 
-    // Inherited from ISearchable - getter for the goal state
+    // Inherited from ISearchable - getter for the goal theState
     State<pair<int, int>> *getGoalState() override {
         return this->goalState;
     }
 
-    // Inherited from ISearchable - check if the current state is the goal state
+    // Inherited from ISearchable - check if the current theState is the goal theState
     bool isGoalState(State<pair<int, int>> *currentState) override {
         if (currentState == goalState) {
             return true;
@@ -102,40 +101,40 @@ public:
         }
     }
 
-    // returns all the possible states you can get from current state
+    // returns all the possible states you can get from current theState
     list<State<pair<int, int>> *> getAllPossibleStates(State<pair<int, int>> *currentState) {
         list<State<pair<int, int>> *> possibleState;
         pair<int, int> currentLocation = currentState->getState();
         int currentRow = currentLocation.first;
         int currentCol = currentLocation.second;
-        //we check if the state around the current state is in the matrix limits
+        //we check if the theState around the current theState is in the matrix limits
 
         if (isInMatrixLimits(currentRow, currentCol - 1)) {
             State<pair<int, int>> *leftFromCurrentState = getLocationInSearchable(currentRow, currentCol - 1);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (leftFromCurrentState->getCost()!= -1) {
+            //if the stateCost of the theState is -1 its mean we cant move to that theState
+            if (leftFromCurrentState->getCost() != -1) {
                 possibleState.push_front(leftFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow + 1, currentCol)) {
             State<pair<int, int>> *upFromCurrentState = getLocationInSearchable(currentRow + 1, currentCol);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (upFromCurrentState->getCost()!= -1) {
+            //if the stateCost of the theState is -1 its mean we cant move to that theState
+            if (upFromCurrentState->getCost() != -1) {
                 possibleState.push_front(upFromCurrentState);
             }
         }
         if (isInMatrixLimits(currentRow, currentCol + 1)) {
             State<pair<int, int>> *rightFromCurrentState = getLocationInSearchable(currentRow, currentCol + 1);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (rightFromCurrentState->getCost()!= -1) {
+            //if the stateCost of the theState is -1 its mean we cant move to that theState
+            if (rightFromCurrentState->getCost() != -1) {
                 possibleState.push_front(rightFromCurrentState);
             }
         }
 
         if (isInMatrixLimits(currentRow - 1, currentCol)) {
             State<pair<int, int>> *downFromCurrentState = getLocationInSearchable(currentRow - 1, currentCol);
-            //if the cost of the state is -1 its mean we cant move to that state
-            if (downFromCurrentState->getCost()!= -1) {
+            //if the stateCost of the theState is -1 its mean we cant move to that theState
+            if (downFromCurrentState->getCost() != -1) {
                 possibleState.push_front(downFromCurrentState);
             }
         }
@@ -145,15 +144,15 @@ public:
     //check if row number and column number is in the matrix limits
     //between 0 to numOfRow/numOfCol.
     bool isInMatrixLimits(int row, int col) {
-        if (row <= this->numOfRow - 1 & row >= 0) {
-            if (col <= this->numOfCol - 1 & col >= 0) {
+        if ((row <= (this->numOfRow - 1)) & (row >= 0)) {
+            if ((col <= (this->numOfCol - 1)) & (col >= 0)) {
                 return true;
             }
         }
         return false;
     }
 
-    //get the state in specific index in the matrix.
+    //get the theState in specific index in the matrix.
     State<pair<int, int>> *getLocationInSearchable(int row, int col) {
         State<pair<int, int>> *state = (matrix.at(row)).at(col);
         return state;
@@ -198,11 +197,9 @@ public:
         }
         if (currentStateCol > prevStateCol) {
             return "Left";
-        }
-        if (currentStateCol < prevStateCol) {
+        } else { //if (currentStateCol < prevStateCol) {
             return "Right";
         }
-
     }
 };
 

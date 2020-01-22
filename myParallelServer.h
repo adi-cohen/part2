@@ -12,8 +12,8 @@ class myParallelServer : public Server {
 private:
     bool stopper;
 public:
-    int open(int port, ClientHandler* handler);
-    int close() {
+    void open(int port, ClientHandler* handler) override ;
+    void close() override {
         stopper = false;
     }
 };

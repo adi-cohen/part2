@@ -22,18 +22,18 @@ protected:
     int pathLength; // represents the length of the min path which was found by the algorithm
     list<State<T> *> visitedList;
 
-    /* When we will want to insert a state to the open list we will push it to the back of the
+    /* When we will want to insert a theState to the open list we will push it to the back of the
      * list to represents pushing an object to a queue
     */
     void addToQueue(State<T> *s) {
         this->stateQueue.push(s);
     }
 
-    /* When we will want to extract a state from the open list we will return it and erase him from the list
+    /* When we will want to extract a theState from the open list we will return it and erase him from the list
      * to represents popping an object from a queue
      */
     State<T> *topAndPopFromQueue() {
-        // get the state/node from the open list
+        // get the theState/node from the open list
         State<T> *s = stateQueue.front();
         //State<T> *s = *(stateQueue.front());
         //pathLength += s->getCost();
@@ -60,27 +60,6 @@ public:
         return pathLength;
     }
 
-    // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    string backTrace(State<T> *currState, ISearchable<T> *searchable) {
-        deque<string> path;
-        string ans = "";
-        this->pathLength = currState->getCost();
-        State<T> *initState = searchable->getInitialState();
-        while (!(currState->Equals(initState))) {
-            path.push_front(currState->getCameFromDir());
-            currState = currState->getCameFrom();
-        }
-
-        auto it = path.begin();
-        ans += *it;
-        it++;
-
-        for (; it != path.end(); it++) {
-            ans += ",";
-            ans += *it;
-        }
-        return ans;
-    }
 };
 
 #endif //PART2_QUEUESEARCHER_H

@@ -6,7 +6,6 @@
 #define PART2_STACKSEARCHER_H
 
 #include "Isearcher.h"
-#include "Solution.h"
 #include "stack"
 
 /*
@@ -21,14 +20,14 @@ protected:
     int evaluatedNodes; // number of nodes evaluated by the algorithm
     int pathLength; // represents the length of the min path which was found by the algorithm
 
-    /* When we will want to insert a state to the open list we will push it to the front of the
+    /* When we will want to insert a theState to the open list we will push it to the front of the
     * list to represents pushing an object to a stack
     */
     void addToVisitedList(State<T> *s) {
         this->visitedList.push_front(s);
     }
 
-    /* When we will want to extract a state from the open list we will return it and erase him from the list
+    /* When we will want to extract a theState from the open list we will return it and erase him from the list
     * to represents popping an object from a stack
     */
     State<T> *topAndPopStack() {
@@ -57,28 +56,6 @@ public:
         return pathLength;
     }
 
-    // This method traces back the path the algorithm found, and returns which steps were taken on this path
-    //todo S not always be string, and here we return string
-    S backTrace(State<T> *currState, ISearchable<T> *searchable) {
-        deque<string> path;
-        string ans = "";
-        this->pathLength = currState->getCost();
-        State<T> *initState = searchable->getInitialState();
-        while (!(currState->Equals(initState))) {
-            path.push_front(currState->getCameFromDir());
-            currState = currState->getCameFrom();
-        }
-
-        auto it = path.begin();
-        ans += *it;
-        it++;
-
-        for (; it != path.end(); it++) {
-            ans += ",";
-            ans += *it;
-        }
-        return ans;
-    }
 };
 
 #endif //PART2_STACKSEARCHER_H

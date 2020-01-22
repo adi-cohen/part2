@@ -17,14 +17,14 @@ using namespace std;
 template<class S, class T>
 class PrioritySearcher : public ISearcher<S, T> {
 protected:
-    /* This multiset holds the states which are waiting to be processed, it is sorted from the smallest cost
-    * to the largest cost to represent an priority queue
+    /* This multiset holds the states which are waiting to be processed, it is sorted from the smallest stateCost
+    * to the largest stateCost to represent an priority queue
     */
     multiset<State<T> *, CompareCost<T>> openList;
     int evaluatedNodes;
     int pathLength;
 
-    /* When we insert a state to the open list we will insert it into the open list
+    /* When we insert a theState to the open list we will insert it into the open list
      * and the multiset will sort itself by the CompareCost object function.
      */
     void addToOpenList(State<T> *s) {
@@ -32,8 +32,7 @@ protected:
     }
 
 
-
-    /* When we will want to extract a state from the open list we will erase it from the open list,
+    /* When we will want to extract a theState from the open list we will erase it from the open list,
      * return it, and the multiset will sort itself accordingly.
      */
     State<T> *popOpenList() {
@@ -45,12 +44,13 @@ protected:
     }
 
 
-
 public:
-    PrioritySearcher()
-    {
+
+
+    PrioritySearcher() {
         evaluatedNodes = 0;
     }
+
     // will be implemented in the Best First Search
     virtual S search(ISearchable<T> *searchable) = 0; // the search method
     // get how many nodes were evaluated by the algorithm

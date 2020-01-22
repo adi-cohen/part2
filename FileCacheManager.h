@@ -14,7 +14,7 @@
 #include <iostream>
 
 
-template< typename S>
+template<typename S>
 //the problem always will be represented by string
 class FileCacheManager : public CacheManager<S> {
 //private:
@@ -23,8 +23,8 @@ class FileCacheManager : public CacheManager<S> {
 private:
     list<pair<string, S>> list1;
     unordered_map<string, typename list<pair<string, S>>::iterator> cacheMap;
-    map<string, string> solvedProblem; //from problem to string ;
-    unsigned int capacity =5; // maximum capacity of cache
+    map <string, string> solvedProblem; //from problem to string ;
+    unsigned int capacity = 5; // maximum capacity of cache
 public:
     bool find(string problem) override {
         return solvedProblem.find(problem) != solvedProblem.end();
@@ -32,15 +32,20 @@ public:
 
     S get(string problem) override {
         //if not in cache
+        string sol = "error";
         if (cacheMap.find(problem) == cacheMap.end()) {
             fstream myFile;
+            string fileName = problem.append(".txt");
             string file_name = problem;
-            myFile.open(file_name, ios::in | ios::binary);
+            myFile.open(file_name, ios::in);
             if (!myFile.is_open()) {
-                throw "an error - file not found";
+                cout << "an error - file not found";
             } else {
-                S solution;
-                myFile.read((char *) &solution, sizeof(solution));
+                string solution = "";
+                string line;
+                while (getline(myFile, line)) {
+                    solution.append(line);
+                }
                 myFile.close();
                 //we need to insert to the cache list
                 insertNewObjToList(problem, solution);
@@ -53,23 +58,26 @@ public:
             insertExistObjToList(problem, solution);
             return solution;
         }
+        return sol;
     }
 
     //our problem is hashed string
-    void save(string problem, S solution) override {
+    void save(string problem, string solution) override {
         //CACHE
         //we need to insert the obj to cache
-            insertNewObjToList(problem, solution);
+        insertNewObjToList(problem, solution);
 
         //DISK
-        string fileName = problem;
+        //string fileName = problem;
         fstream io_file;
-        io_file.open(fileName, ios::binary | ios::out);
+        string fileName = problem.append(".txt");
+        io_file.open(fileName, ios::out);
         if (!io_file.is_open()) {
             cout << "error in opening the file" << endl;
         }
         //now insert to the file
-        io_file.write((char *) &solution, sizeof(solution));
+        io_file << solution;
+
         io_file.close();
         //adding the file to the problemMap
         this->solvedProblem[problem] = fileName;

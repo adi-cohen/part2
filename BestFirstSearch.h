@@ -16,7 +16,13 @@ using namespace std;
 // as a Best First Search algorithm as we saw in the lecture
 template<class S, class T>
 class BestFirstSearch : public PrioritySearcher<S, T> {
+    string algoName = "BestFs";
+
 public:
+
+    string getName() override {
+        return this->algoName;
+    }
     /*
      * This method gets a searchable problem runs the Best First Search algorithm and returns
      * the minimal path it found
@@ -27,10 +33,10 @@ public:
         multiset<State<T> *, CompareCost<T>> closed;
         // while the multi-set OpenList is not empty
         while (PrioritySearcher<S, T>::openList.size() > 0) {
-            // dequeue the top state/node in the multi-set OpenList
+            // dequeue the top theState/node in the multi-set OpenList
             State<T> *n = PrioritySearcher<S, T>::popOpenList();
             closed.insert(n);
-            // if the node n is the goal state
+            // if the node n is the goal theState
             if (searchable->isGoalState(n)) {
                 // we will do back trace and return the solution
                 return ISearcher<S, T>::backTrace(n, searchable);
@@ -39,9 +45,9 @@ public:
             list<State<T> *> successors = searchable->getAllPossibleStates(n);
             // we iterate over each successor of node n:
             for (auto it = successors.begin(); it != successors.end(); it++) {
-                // if the state isn't found in the open list and also the closed list we will add it to the open list
+                // if the theState isn't found in the open list and also the closed list we will add it to the open list
                 if ((!isInSet(PrioritySearcher<S, T>::openList, *it)) && (!(isInSet(closed, *it)))) {
-                    // we save the state
+                    // we save the theState
                     State<T> *s = *it;
                     // update that we came to s from n
                     s->setCameFrom(n);
@@ -49,9 +55,9 @@ public:
                     // and move it to the open list
                     this->addToOpenList(s);
                 }
-                    /* if the state isn't found in the closed list but is found in the open list,
+                    /* if the theState isn't found in the closed list but is found in the open list,
                     * we will check if it has smaller
-                    * cost then what is already found in the open list and if it has we will replace the old cost with
+                    * stateCost then what is already found in the open list and if it has we will replace the old stateCost with
                     * the new one
 
                 else if (!(isInSet(closed, *it))) {
@@ -78,10 +84,11 @@ public:
                 }
             }
         }
+        return "did not find path";
     }
 
     multiset<State<T> *, CompareCost<T>> updatePriorityQueue(multiset<State<T> *, CompareCost<T>> enteredQueue) {
-        multiset<State<T> *, CompareCost<T>> newQueue;
+        multiset<State<T> *, CompareCost<T>> newQueue;// = new multiset<State<T> *, CompareCost<T>>();
         while(enteredQueue.size() > 0) {
             auto it = enteredQueue.end();
             State<T> *sa = *it;
@@ -91,12 +98,12 @@ public:
         return newQueue;
     }
 
-    // The following method checks if a state is found in the open list, and if it's cost is smaller then the state inside
-    // the open list we will replace it's cost with the new cost
+    // The following method checks if a theState is found in the open list, and if it's stateCost is smaller then the theState inside
+    // the open list we will replace it's stateCost with the new stateCost
     virtual void saveMin(State<T> *currState, State<T> *n) {
         for (auto it = PrioritySearcher<S, T>::openList.begin(); it != PrioritySearcher<S, T>
         ::openList.end(); it++) {
-            // save the state in s
+            // save the theState in s
             State<T> *s = *it;
             // means it is in the open list
             if (s->Equals(currState)) {
@@ -104,7 +111,7 @@ public:
                 if(currState->getSumOfCosts() + s->getCost() < s->getSumOfCosts())
                     // if (currState->getCost() <= s->getCost())
                     {
-                    // set the father of the current state
+                    // set the father of the current theState
                     currState->setCameFrom(s->getCameFrom());
                     // adjust the open list
                     PrioritySearcher<S, T>::openList.erase(it);
@@ -113,14 +120,14 @@ public:
                 //return;
             }
         }
-        // set the father of the current state
+        // set the father of the current theState
         currState->setCameFrom(n);
         // if it's not in the open list add it to open list
         this->addToOpenList(currState);
         return;
     }
 
-    // The following method checks if a state is inside a multiset
+    // The following method checks if a theState is inside a multiset
     // we use it to check if any successor is inside the the open list or the closed list.
     bool isInSet(multiset<State<T> *, CompareCost<T>> setOfState, State<T> *currState) {
         for (auto it = setOfState.begin(); it != setOfState.end(); it++) {

@@ -11,26 +11,40 @@
 #include "ISearchable.h"
 #include "BestFirstSearch.h"
 #include "MyClientHandler.h"
+#include "myParallelServer.h"
 //create new namespace boot with function main
 namespace boot {
     class Main {
     public:
         int main(int port) {
             //create serial server as server
-            server_side::Server *serialServer = new mySerialServer();
+            //server_side::Server *serialServer = new MySerialServer();
+            server_side::Server *parallelServer = new myParallelServer();
 
             //create file cache as cache manager
             CacheManager<string> *fileCache = new FileCacheManager<string>();
 
             //create testClientHandler with string reverser and file cache
             ClientHandler *clientHandler = new MyClientHandler(fileCache);
-            serialServer->open(port, clientHandler);
+            parallelServer->open(port, clientHandler);
+            //serialServer->open(port, clientHandler);
+            return 0;
         }
     };
 }
 
 int main(int argc, char *argv[]) {
-    int port = atoi(argv[0]);
+    (void)argc;
+    (void)argv;
+    int port;
+    //if we get port from the user
+    if (argv[1] != NULL) {
+         port = atoi(argv[1]);
+    }
+    //the defult port is 5600
+    else {
+         port = 5600;
+    }
     boot::Main main;
-    main.main(5600);
-};
+    main.main(port);
+}

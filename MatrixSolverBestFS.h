@@ -20,7 +20,7 @@ private:
     //ISearcher<string, pair<int, int>> *searcher = new BFS<string, pair<int,int>>();
     //ISearcher<string, pair<int, int>> *searcher = new DFS<string, pair<int,int>>();
     //ISearcher<string, pair<int, int>> *searcher = new AStar<string, pair<int,int>>();
-    ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int,int>>();
+    ISearcher<string, pair<int, int>> *searcher = new BestFirstSearch<string, pair<int, int>>();
 
     // we have specific searchable - searchableMatrix
     //ISearchable<pair<int, int>>* searchableMatrix;
@@ -30,5 +30,15 @@ public :
         return this->searcher->search(&problem);
     }
 
+    Solver *getClone() {
+        return new MatrixSolverBestFS();
+    }
+
+    string getSolverName (){
+    return this->searcher->getName();
+}
+
+
 };
+
 #endif //PART2_MATRIXSOLVERBESTFS_H

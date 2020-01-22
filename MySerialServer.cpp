@@ -2,10 +2,6 @@
 // Created by yaron on 08/01/2020.
 //
 #include "MySerialServer.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -45,12 +41,10 @@ void activateClientHandler(bool* stop, int* sock,void* cli, socklen_t* clil, Cli
 }
 
 
-int mySerialServer::open(int port, ClientHandler* handler) {
-    int sockfd, newsockfd;
+void MySerialServer::open(int port, ClientHandler* handler) {
+    int sockfd;
     socklen_t clilen;
-    char buffer[256];
     struct sockaddr_in  cli_addr;
-    int n;
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd ==-1 ) {
         std::cout << ("ERROR opening socket") << std::endl;
@@ -84,7 +78,7 @@ int mySerialServer::open(int port, ClientHandler* handler) {
     runMe.join();
 }
 
-int mySerialServer::close() {
+void MySerialServer::close() {
     stopper = false;
 }
 

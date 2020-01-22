@@ -7,7 +7,7 @@
 #include "State.h"
 
 // in the following class we use object function that checks the sum of costs
-// per each state and compare them
+// per each theState and compare them
 template <class T>
 struct CompareCost {
 public:

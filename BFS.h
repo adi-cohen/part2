@@ -12,7 +12,12 @@ class BFS : public QueueSearcher<S, T> {
 private:
     // the adjancet list of the source vertex
     list<State<T> *> adjList;
+    string algoName = "BFS";
+
 public:
+    string getName() override {
+        return this->algoName;
+    }
     S search(ISearchable<T> *searchable) {
         // getting the source vertex
         State<T> *startState = searchable->getInitialState();
@@ -21,7 +26,7 @@ public:
         return runBFS(startState, searchable);
         //string solution = to_string(totalNumOfNodes);
         //return solution;
-        int x=1;
+
     }
 
     S runBFS(State<T> *startState, ISearchable<T> *searchable) {
@@ -49,7 +54,7 @@ public:
                     // set where it came from
                     State<T> *neighbor = *UIterator;
                     neighbor->setCameFrom(u);
-                    //set the sum of cost
+                    //set the sum of stateCost
                     neighbor->setSumOfCosts(u->getSumOfCosts()+neighbor->getCost());
                     if (searchable->isGoalState(*UIterator)){
                         this->evaluatedNodes++;
@@ -67,6 +72,8 @@ public:
         }
         // return the total number if nodes that the algorithm passed
         //return to_string(this->evaluatedNodes);
+        cout << "cant find path" <<endl;
+        return "cant find path";
     }
 
     bool isInVisitedList(State<T> *state) {

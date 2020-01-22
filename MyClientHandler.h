@@ -23,17 +23,22 @@ private:
     CacheManager<string> *cacheManager{};
 public:
     MyClientHandler(CacheManager<string> *cache) {
-        //this->solver = solv;
         this->cacheManager = cache;
     }
 
+
+
     //the client will send the matrix row by row
     //we will read the matrix as strings and insert it to matrixProblem
-    //after the matrix we will gate the initial state and goal state
+    //after the matrix we will gate the initial theState and goal theState
     //at the end the client will sent the word "end"
-
+    virtual ClientHandler* getClone(){
+        return new MyClientHandler(cacheManager);
+    }
 
     void handleClient(int client_socket) override {
+
+
         vector<string> matrixStringVector;
         pair<int, int> startLocation;
         pair<int, int> goalLocation;
@@ -101,10 +106,14 @@ public:
             //in the next iteration we will handle the secondPart after the \n
             firstBuffer = secondPart;
         }
+
+//        string solution = "sol";
+//        const char *solutionChar = solution.c_str();
+//        send(client_socket, solutionChar, solution.size(), 0);
+//        return;
+
         //after we read all the data from the file
         //creating the matrixProblem
-        //we are decrease one from number of row and column because we add one in the last iteration,
-        //but we didnt really add one more line and column
         MatrixProblem *matrix = new MatrixProblem(matrixStringVector, startLocation, goalLocation, matrixRow,
                                                   matrixCol);
         //create string that represent the problem with hash function
@@ -112,23 +121,27 @@ public:
 
         //OA - MatrixSolverBestFS
         this->solver = new MatrixSolverBestFS();
-
-
+        string name = this->solver->getSolverName();
+        string problemName = matrixStringHash.append(name);
         //if we already solve this problem
-        if (this->cacheManager->find(matrixStringHash)) {
-            string solution = this->cacheManager->get(matrixStringHash);
-            const char *solutionChar = solution.c_str();
-            send(client_socket, solutionChar, solution.size(), 0);
+        if (this->cacheManager->find(problemName)) {
+            string solution1 = this->cacheManager->get(problemName);
+            const char *solutionChar1 = solution1.c_str();
+            send(client_socket, solutionChar1, solution1.size(), 0);
+
         } else {
             //if we need to solve the problem now
             //we will sent to solver the problem as matrix
             string solution = this->solver->solve(*matrix);
             //we will save the problem as matrix string and the solution as matrix string
-            this->cacheManager->save(matrixStringHash, solution);
+            this->cacheManager->save(problemName, solution);
             const char *solutionChar = solution.c_str();
             send(client_socket, solutionChar, solution.size(), 0);
         }
     }
 };
+
+
+
 
 #endif //PART2_MYCLIENTHANDLER_H

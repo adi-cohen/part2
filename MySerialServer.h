@@ -10,14 +10,12 @@
 #include "ClientHandler.h"
 
 //using namespace server_side;
-class mySerialServer: public server_side::Server {
+class MySerialServer: public server_side::Server {
 private:
     bool stopper{};
 public:
-    mySerialServer() {return;}
-    ~mySerialServer() {return;}
-    int open(int port, ClientHandler* handler);
-    int close();
+    void open(int port, ClientHandler* handler);
+    void close();
 };
 //using namespace server_side;
 
