@@ -31,6 +31,7 @@ protected:
     * to represents popping an object from a stack
     */
     State<T> *topAndPopStack() {
+        evaluatedNodes++;
         State<T> *state = this->stateStack.top();
         this->stateStack.pop();
         return state;

@@ -57,7 +57,6 @@ public:
                     //set the sum of stateCost
                     neighbor->setSumOfCosts(u->getSumOfCosts()+neighbor->getCost());
                     if (searchable->isGoalState(*UIterator)){
-                        this->evaluatedNodes++;
                         //return to_string(this->evaluatedNodes);
                         return  ISearcher<S, T>::backTrace(*UIterator, searchable);
                     }
@@ -65,7 +64,6 @@ public:
                     this->visitedList.push_front(*UIterator);
                     this->stateQueue.push(*UIterator);
                     // increase the number of visited nodes
-                    this->evaluatedNodes++;
                 }
             }
 

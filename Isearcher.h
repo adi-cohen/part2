@@ -4,13 +4,14 @@
 
 #ifndef PART2_ISEARCHER_H
 #define PART2_ISEARCHER_H
+
 #include "ISearchable.h"
 #include <vector>
 #include <deque>
 
 // The following interface represent the algorithm itself which takes part of the bridge design pattern.
-  // we use the dependency injection so we can solve any kind of search problem by different search algorithms.
-template <typename S,class T>
+// we use the dependency injection so we can solve any kind of search problem by different search algorithms.
+template<typename S, class T>
 class ISearcher {
 private:
     int pathLength;
@@ -18,14 +19,16 @@ private:
 
 
 public:
-    virtual string getName() =0;
+    virtual string getName() = 0;
+
     virtual ~ISearcher() = default;
-    virtual S search (ISearchable<T>* searchable) = 0; // the search method - dependency injection
+
+    virtual S search(ISearchable<T> *searchable) = 0; // the search method - dependency injection
     virtual int getNumberOfNodesEvaluated() = 0; // get how many nodes were evaluated by the algorithm
     virtual int getPathLength() = 0; // get how many nodes were evaluated by the algorithm
     // This method traces back the path the algorithm found, and returns which steps were taken on this path
     string backTrace(State<T> *s, ISearchable<T> *searchable) {
-        deque<string> path;
+        deque <string> path;
         string ans = "";
         //int numberOfStates =0;
         // pathLength holds to stateCost to reach to that theState
@@ -35,9 +38,9 @@ public:
         while (!(s->Equals(initState))) {
             // put in the deque the direction that the theState was came from
             //numberOfStates+=1;
-            State<pair<int,int>>* currentState = s;
-            State<pair<int,int>>* prevState = s->getCameFrom();
-            string stringg = searchable->getDirection(prevState,currentState);
+            State<pair<int, int>> *currentState = s;
+            State<pair<int, int>> *prevState = s->getCameFrom();
+            string stringg = searchable->getDirection(prevState, currentState);
             stringg.append("(");
             stringg.append(to_string(currentState->getSumOfCosts()));
             stringg.append(")");
@@ -55,8 +58,12 @@ public:
             ans += ",";
             ans += *it;
         }
-        // return the pass of all the states
+        // if we want to return the number of nodes
+        //int numberOfNodes = this->getNumberOfNodesEvaluated();
+        //ans.append("\n number of nodes: ");
+        //ans.append(to_string(numberOfNodes) +"\n");
         return ans;
+
     }
 };
 

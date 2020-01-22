@@ -42,7 +42,6 @@ public:
         this->addToVisitedList(startState);
         // add the source node to the open list which is a stack data structure
         this->stateStack.push(startState);
-        this->evaluatedNodes++;
         // create an iterator to iterate through the adjacency list
         typename std::list<State<T> *>::iterator i;
         // while the stack is not empty
@@ -52,7 +51,6 @@ public:
             // if the popped theState was not visited marked it
             if (!isInVisitedList(u)) {
                 // increase the number of visited nodes
-                this->evaluatedNodes++;
                 //the came from theState is the last theState in the visited List
                 State<T> *prevState = this->visitedList.front();
                 this->addToVisitedList(u);
