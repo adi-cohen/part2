@@ -25,7 +25,7 @@ in order to solve this problem, we used 4 algorethms.
 
 we preformes an experiment and choose the most effective algorithm.
 we can see below the results of the experiment:
-![the table](https://github.com/adi-cohen/part2/blob/master/ALGO.png)
+![the table](https://github.com/adi-cohen/part2/blob/master/ALGO.jpg)
 
 ### Design Patterns in C++
 
